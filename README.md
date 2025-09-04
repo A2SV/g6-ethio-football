@@ -32,12 +32,17 @@ This repository contains the **Flutter mobile app**, built **mobile-first** with
 
 lib/
 ├── main.dart # App entry
-├── ui/ # Widgets, screens (Chat, LiveHub, Compare, News, MyClubs, Offline)
-├── models/ # Data models (Team, Fixture, Standing, NewsItem)
-├── services/ # API + Cache layer
-├── localization/ # Amharic/English strings
-└── utils/ # Helpers (date, format, constants)
-
+├── features
+|      |-- Chat
+            |--Data
+                |-- DataSources
+                |-- Repositories
+                |-- Models
+            |--Domain
+                |-- Entities
+                |-- Usecases
+                |-- Repositories
+            |--
 ## ⚙️ Setup
 
 1. Install [Flutter SDK](https://flutter.dev/docs/get-started/install) (≥3.0).  
