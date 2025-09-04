@@ -1,9 +1,8 @@
-import type { Metadata } from 'next'
+'use client'
 import './global.css'
+import { Provider } from 'react-redux'
+import { store } from '../lib/redux/store'
 
-export const metadata: Metadata = {
-  title: ' EthioFootball App',
-}
 
 export default function RootLayout({
   children,
@@ -12,9 +11,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      className='font-newsreader bg-gray-50 min-h-screen'
-      >{children}</body>
+      <body className="font-newsreader bg-gray-50 min-h-screen">
+        <Provider store={store}>
+          {children}
+        </Provider>
+      </body>
     </html>
   )
 }

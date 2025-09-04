@@ -9,9 +9,9 @@ interface LiveHubRoutingsProps {
 
 const LiveHubRoutings: React.FC<LiveHubRoutingsProps> = ({ currentPath }) => {
   const links = [
-    { href: "/liveScores", label: "Live Scores", icon: "access_time.svg" },
-    { href: "/fixtures", label: "Fixtures", icon: "calendar_today.svg" },
-    { href: "/table", label: "Table", icon: "table.svg" },
+    { href: "/liveScores", label: "Live Scores", icon: "icons/access_time.svg" },
+    { href: "/fixtures", label: "Fixtures", icon: "icons/calendar_today.svg" },
+    { href: "/table", label: "Table", icon: "icons/table.svg" },
   ];
 
   const [hovered, setHovered] = useState<string | null>(null);
