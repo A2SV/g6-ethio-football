@@ -44,62 +44,62 @@ lib/
 │   │   │   ├── Entities/     # Core entities
 │   │   │   ├── Usecases/     # Business logic / actions
 │   │   │   └── Repositories/ # Repository interfaces
-│   │   └── Presentation/     # UI screens, widgets, blocs/providers (if applicable)
-│   │   │   ├── Widgets/     # Essential widgets
-│   │   │   ├── Pages/     # Pages to display
-│   │   │   └── Bloc/ # State Control
+│   │   └── Presentation/     # UI screens, widgets, blocs/providers
+│   │       ├── Widgets/      # Essential widgets
+│   │       ├── Pages/        # Pages to display
+│   │       └── Bloc/         # State control
 │   ├── LiveHub/              # Live scores, tables, fixtures
-│   │   │   ├── Data/             # Data layer
-│   │   │   ├── DataSources/  # API or local data sources
-│   │   │   ├── Repositories/ # Implementations of repository interfaces
-│   │   │   └── Models/       # Data models (DTOs)
-│   │   ├── Domain/           # Domain layer (business logic)
-│   │   │   ├── Entities/     # Core entities
-│   │   │   ├── Usecases/     # Business logic / actions
-│   │   │   └── Repositories/ # Repository interfaces
-│   │   └── Presentation/     # UI screens, widgets, blocs/
-│   │   │   ├── Widgets/     # Essential widgets
-│   │   │   ├── Pages/     # Pages to display
-│   │   │   └── Bloc/ # State Control
+│   │   ├── Data/
+│   │   │   ├── DataSources/
+│   │   │   ├── Repositories/
+│   │   │   └── Models/
+│   │   ├── Domain/
+│   │   │   ├── Entities/
+│   │   │   ├── Usecases/
+│   │   │   └── Repositories/
+│   │   └── Presentation/
+│   │       ├── Widgets/
+│   │       ├── Pages/
+│   │       └── Bloc/
 │   ├── Compare/              # Team comparison screens and logic
-│   │   │   ├── Data/             # Data layer
-│   │   │   ├── DataSources/  # API or local data sources
-│   │   │   ├── Repositories/ # Implementations of repository interfaces
-│   │   │   └── Models/       # Data models (DTOs)
-│   │   ├── Domain/           # Domain layer (business logic)
-│   │   │   ├── Entities/     # Core entities
-│   │   │   ├── Usecases/     # Business logic / actions
-│   │   │   └── Repositories/ # Repository interfaces
-│   │   └── Presentation/     # UI screens, widgets, blocs/
-│   │   │   ├── Widgets/     # Essential widgets
-│   │   │   ├── Pages/     # Pages to display
-│   │   │   └── Bloc/ # State Control
+│   │   ├── Data/
+│   │   │   ├── DataSources/
+│   │   │   ├── Repositories/
+│   │   │   └── Models/
+│   │   ├── Domain/
+│   │   │   ├── Entities/
+│   │   │   ├── Usecases/
+│   │   │   └── Repositories/
+│   │   └── Presentation/
+│   │       ├── Widgets/
+│   │       ├── Pages/
+│   │       └── Bloc/
 │   ├── News/                 # RSS feed handling and news screens
-│   │   │   ├── Data/             # Data layer
-│   │   │   ├── DataSources/  # API or local data sources
-│   │   │   ├── Repositories/ # Implementations of repository interfaces
-│   │   │   └── Models/       # Data models (DTOs)
-│   │   ├── Domain/           # Domain layer (business logic)
-│   │   │   ├── Entities/     # Core entities
-│   │   │   ├── Usecases/     # Business logic / actions
-│   │   │   └── Repositories/ # Repository interfaces
-│   │   └── Presentation/     # UI screens, widgets, blocs/
-│   │   │   ├── Widgets/     # Essential widgets
-│   │   │   ├── Pages/     # Pages to display
-│   │   │   └── Bloc/ # State Control
-│   └── MyClubs/              # Followed clubs, favorites, notifications
-│   │   │   ├── Data/             # Data layer
-│   │   │   ├── DataSources/  # API or local data sources
-│   │   │   ├── Repositories/ # Implementations of repository interfaces
-│   │   │   └── Models/       # Data models (DTOs)
-│   │   ├── Domain/           # Domain layer (business logic)
-│   │   │   ├── Entities/     # Core entities
-│   │   │   ├── Usecases/     # Business logic / actions
-│   │   │   └── Repositories/ # Repository interfaces
-│   │   └── Presentation/     # UI screens, widgets, blocs/
-│   │   │   ├── Widgets/     # Essential widgets
-│   │   │   ├── Pages/     # Pages to display
-│   │   │   └── Bloc/ # State Control
+│   │   ├── Data/
+│   │   │   ├── DataSources/
+│   │   │   ├── Repositories/
+│   │   │   └── Models/
+│   │   ├── Domain/
+│   │   │   ├── Entities/
+│   │   │   ├── Usecases/
+│   │   │   └── Repositories/
+│   │   └── Presentation/
+│   │       ├── Widgets/
+│   │       ├── Pages/
+│   │       └── Bloc/
+│   └── MyClubs/             # Followed clubs, favorites, notifications
+│       ├── Data/
+│       │   ├── DataSources/
+│       │   ├── Repositories/
+│       │   └── Models/
+│       ├── Domain/
+│       │   ├── Entities/
+│       │   ├── Usecases/
+│       │   └── Repositories/
+│       └── Presentation/
+│           ├── Widgets/
+│           ├── Pages/
+│           └── Bloc/
 ├── services/                 # API + Cache layer
 ├── localization/             # Amharic/English string resources
 └── utils/                    # Helpers (date, format, constants)
