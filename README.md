@@ -30,26 +30,88 @@ This repository contains the **Flutter mobile app**, built **mobile-first** with
 
 ## 📂 Project Structure
 
+## 📂 Project Structure
+
 lib/
-├── main.dart # App entry
-├── features
-|      |-- Chat
-            |--Data
-                |-- DataSources
-                |-- Repositories
-                |-- Models
-            |--Domain
-                |-- Entities
-                |-- Usecases
-                |-- Repositories
-            |--
+├── main.dart                 # App entry point
+├── features/
+│   ├── Chat/                 # Chat feature (AI Q&A)
+│   │   ├── Data/             # Data layer
+│   │   │   ├── DataSources/  # API or local data sources
+│   │   │   ├── Repositories/ # Implementations of repository interfaces
+│   │   │   └── Models/       # Data models (DTOs)
+│   │   ├── Domain/           # Domain layer (business logic)
+│   │   │   ├── Entities/     # Core entities
+│   │   │   ├── Usecases/     # Business logic / actions
+│   │   │   └── Repositories/ # Repository interfaces
+│   │   └── Presentation/     # UI screens, widgets, blocs/providers (if applicable)
+│   │   │   ├── Widgets/     # Essential widgets
+│   │   │   ├── Pages/     # Pages to display
+│   │   │   └── Bloc/ # State Control
+│   ├── LiveHub/              # Live scores, tables, fixtures
+│   │   │   ├── Data/             # Data layer
+│   │   │   ├── DataSources/  # API or local data sources
+│   │   │   ├── Repositories/ # Implementations of repository interfaces
+│   │   │   └── Models/       # Data models (DTOs)
+│   │   ├── Domain/           # Domain layer (business logic)
+│   │   │   ├── Entities/     # Core entities
+│   │   │   ├── Usecases/     # Business logic / actions
+│   │   │   └── Repositories/ # Repository interfaces
+│   │   └── Presentation/     # UI screens, widgets, blocs/
+│   │   │   ├── Widgets/     # Essential widgets
+│   │   │   ├── Pages/     # Pages to display
+│   │   │   └── Bloc/ # State Control
+│   ├── Compare/              # Team comparison screens and logic
+│   │   │   ├── Data/             # Data layer
+│   │   │   ├── DataSources/  # API or local data sources
+│   │   │   ├── Repositories/ # Implementations of repository interfaces
+│   │   │   └── Models/       # Data models (DTOs)
+│   │   ├── Domain/           # Domain layer (business logic)
+│   │   │   ├── Entities/     # Core entities
+│   │   │   ├── Usecases/     # Business logic / actions
+│   │   │   └── Repositories/ # Repository interfaces
+│   │   └── Presentation/     # UI screens, widgets, blocs/
+│   │   │   ├── Widgets/     # Essential widgets
+│   │   │   ├── Pages/     # Pages to display
+│   │   │   └── Bloc/ # State Control
+│   ├── News/                 # RSS feed handling and news screens
+│   │   │   ├── Data/             # Data layer
+│   │   │   ├── DataSources/  # API or local data sources
+│   │   │   ├── Repositories/ # Implementations of repository interfaces
+│   │   │   └── Models/       # Data models (DTOs)
+│   │   ├── Domain/           # Domain layer (business logic)
+│   │   │   ├── Entities/     # Core entities
+│   │   │   ├── Usecases/     # Business logic / actions
+│   │   │   └── Repositories/ # Repository interfaces
+│   │   └── Presentation/     # UI screens, widgets, blocs/
+│   │   │   ├── Widgets/     # Essential widgets
+│   │   │   ├── Pages/     # Pages to display
+│   │   │   └── Bloc/ # State Control
+│   └── MyClubs/              # Followed clubs, favorites, notifications
+│   │   │   ├── Data/             # Data layer
+│   │   │   ├── DataSources/  # API or local data sources
+│   │   │   ├── Repositories/ # Implementations of repository interfaces
+│   │   │   └── Models/       # Data models (DTOs)
+│   │   ├── Domain/           # Domain layer (business logic)
+│   │   │   ├── Entities/     # Core entities
+│   │   │   ├── Usecases/     # Business logic / actions
+│   │   │   └── Repositories/ # Repository interfaces
+│   │   └── Presentation/     # UI screens, widgets, blocs/
+│   │   │   ├── Widgets/     # Essential widgets
+│   │   │   ├── Pages/     # Pages to display
+│   │   │   └── Bloc/ # State Control
+├── services/                 # API + Cache layer
+├── localization/             # Amharic/English string resources
+└── utils/                    # Helpers (date, format, constants)
+
+
 ## ⚙️ Setup
 
 1. Install [Flutter SDK](https://flutter.dev/docs/get-started/install) (≥3.0).  
 2. Clone the repo:
-   git clone https://github.com/Mikreselasie/ethiofootball-mobile.git
+   git clone <https://github.com/Mikreselasie/ethiofootball-mobile.git>
    cd ethiofootball-mobile
-3. Install dependencies: 
+3. Install dependencies:
     flutter pub get
 4. Run the app:
     flutter run
