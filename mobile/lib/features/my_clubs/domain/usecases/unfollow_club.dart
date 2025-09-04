@@ -5,22 +5,22 @@ import 'package:ethio_football/features/my_clubs/domain/repositories/my_clubs_re
 
 import '../../../../core/usecase.dart';
 
-class FollowClub implements UseCase<Unit, FollowClubParams> {
+class UnfollowClub implements UseCase<Unit, UnfollowClubParams> {
   final MyClubsRepository repository;
 
-  FollowClub(this.repository);
+  UnfollowClub(this.repository);
 
   @override
-  Future<Either<Failure, Unit>> call(FollowClubParams params) async {
+  Future<Either<Failure, Unit>> call(UnfollowClubParams params) async {
     final result = await repository.unfollowClub(params.clubId);
     return result.fold((failure) => Left(failure), (_) => Right(unit));
   }
 }
 
-class FollowClubParams extends Equatable {
+class UnfollowClubParams extends Equatable {
   final String clubId;
 
-  const FollowClubParams({required this.clubId});
+  const UnfollowClubParams({required this.clubId});
 
   @override
   List<Object?> get props => [clubId];
