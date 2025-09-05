@@ -1,3 +1,10 @@
+import 'package:ethio_football/core/Presentation/widgets/search_bar.dart';
+import 'package:ethio_football/features/my_clubs/presentation/widgets/club_card.dart';
+import 'package:ethio_football/features/my_clubs/presentation/widgets/league_preference_tab.dart';
+
+import '../../../../core/Presentation/constants/colors.dart';
+import '../../../../core/Presentation/constants/dimensions.dart';
+import '../../../../core/Presentation/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/club.dart';
@@ -26,116 +33,127 @@ class _MyClubsPageState extends State<MyClubsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("My Clubs")),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            // Search bar
-            TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search clubs...',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    _searchController.clear();
-                    context.read<MyClubsBloc>().add(LoadAllClubs());
-                  },
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              onChanged: (query) {
-                if (query.isNotEmpty) {
-                  context.read<MyClubsBloc>().add(SearchClubsEvent(query));
-                } else {
-                  context.read<MyClubsBloc>().add(LoadAllClubs());
-                }
-              },
-            ),
-            const SizedBox(height: 8),
-            // League filter
-            DropdownButton<League>(
-              value: _selectedLeague,
-              hint: const Text('Filter by league'),
-              items: League.values.map((league) {
-                return DropdownMenuItem(
-                  value: league,
-                  child: Text(league.name),
-                );
-              }).toList(),
-              onChanged: (league) {
-                setState(() {
-                  _selectedLeague = league;
-                });
-                if (league != null) {
-                  context.read<MyClubsBloc>().add(FilterClubsEvent(league));
-                } else {
-                  context.read<MyClubsBloc>().add(LoadAllClubs());
-                }
-              },
-            ),
-            const SizedBox(height: 8),
-            // Club list
-            Expanded(
-              child: BlocBuilder<MyClubsBloc, MyClubsState>(
-                builder: (context, state) {
-                  if (state is MyClubsLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is MyClubsLoaded) {
-                    if (state.clubs.isEmpty) {
-                      return const Center(child: Text('No clubs found.'));
-                    }
-                    return ListView.builder(
-                      itemCount: state.clubs.length,
-                      itemBuilder: (context, index) {
-                        final club = state.clubs[index];
-                        return Card(
-                          child: ListTile(
-                            leading: club.logoUrl != null
-                                ? Image.network(club.logoUrl!)
-                                : const Icon(Icons.sports_soccer),
-                            title: Text(club.name),
-                            subtitle: Text(
-                              '${club.league.name} - ${club.description}',
-                            ),
-                            trailing: ElevatedButton(
-                              onPressed: () {
-                                if (club.isFollowed) {
-                                  context.read<MyClubsBloc>().add(
-                                    UnfollowClubEvent(club.id),
-                                  );
-                                } else {
-                                  context.read<MyClubsBloc>().add(
-                                    FollowClubEvent(club.id),
-                                  );
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: club.isFollowed
-                                    ? Colors.red
-                                    : Colors.green,
-                              ),
-                              child: Text(
-                                club.isFollowed ? 'Unfollow' : 'Follow',
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  } else if (state is MyClubsError) {
-                    return Center(child: Text('Error: ${state.message}'));
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
-            ),
-          ],
+      backgroundColor: kBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const Icon(Icons.arrow_back_ios_new, color: kPrimaryTextColor),
+        centerTitle: true,
+        title: Text(
+          "CHOOSE CLUBS",
+          style: TextStyle(
+            color: kPrimaryTextColor,
+            fontWeight: FontWeight.bold,
+            fontSize: kTitleFontSize(context),
+          ),
         ),
+      ),
+      body: BlocBuilder<MyClubsBloc, MyClubsState>(
+        builder: (context, state) {
+          return CustomScrollView(
+            slivers: [
+              // 🔹 Search + League Tabs
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: kTop,
+                  decoration: BoxDecoration(
+                    color: kBackgroundColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: kAccentColor.withOpacity(0.12),
+                        blurRadius: 4,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      CustomSearchBar(
+                        searchController: _searchController,
+                        hintText: "Search Clubs",
+                        onChanged: (query) {
+                          if (query.isNotEmpty) {
+                            context.read<MyClubsBloc>().add(
+                              SearchClubsEvent(query),
+                            );
+                          } else {
+                            context.read<MyClubsBloc>().add(LoadAllClubs());
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          LeaguePreferenceTab(
+                            label: 'Ethiopian Premier League',
+                            isSelected: _selectedLeague == League.ETH,
+                            onTap: () {
+                              setState(() {
+                                _selectedLeague = League.ETH;
+                              });
+                              context.read<MyClubsBloc>().add(
+                                FilterClubsEvent(League.ETH),
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 10),
+                          LeaguePreferenceTab(
+                            label: 'English Premier League',
+                            isSelected: _selectedLeague == League.EPL,
+                            onTap: () {
+                              setState(() {
+                                _selectedLeague = League.EPL;
+                              });
+                              context.read<MyClubsBloc>().add(
+                                FilterClubsEvent(League.EPL),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // 🔹 Clubs List
+              if (state is MyClubsLoading)
+                const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (state is MyClubsLoaded)
+                state.clubs.isEmpty
+                    ? const SliverFillRemaining(
+                        child: Center(child: Text('No clubs found.')),
+                      )
+                    : SliverPadding(
+                        padding: kScreenPadding,
+                        sliver: SliverGrid(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: kCardMargin,
+                                mainAxisSpacing: kCardMargin,
+                                childAspectRatio: 0.7,
+                              ),
+                          delegate: SliverChildBuilderDelegate((
+                            context,
+                            index,
+                          ) {
+                            final club = state.clubs[index];
+                            return ClubCard(club: club);
+                          }, childCount: state.clubs.length),
+                        ),
+                      )
+              else if (state is MyClubsError)
+                SliverFillRemaining(
+                  child: Center(child: Text('Error: ${state.message}')),
+                )
+              else
+                const SliverToBoxAdapter(child: SizedBox.shrink()),
+            ],
+          );
+        },
       ),
     );
   }
