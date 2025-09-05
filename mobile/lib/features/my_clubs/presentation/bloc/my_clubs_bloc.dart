@@ -67,10 +67,12 @@ class MyClubsBloc extends Bloc<MyClubsEvent, MyClubsState> {
     Emitter<MyClubsState> emit,
   ) async {
     emit(MyClubsLoading());
+
     final result = await repository.searchClub(event.query);
+
     result.fold(
       (failure) => emit(MyClubsError(failure.message)),
-      (clubs) => emit(MyClubsLoaded(clubs)),
+      (clubs) => emit(MyClubsLoaded(clubs)), // just call emit, don’t assign
     );
   }
 

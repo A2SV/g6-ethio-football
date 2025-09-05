@@ -40,8 +40,8 @@ class MyClubsRepositoryImpl implements MyClubsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> searchClub(String query) async {
+  Future<Either<Failure, List<Club>>> searchClub(String query) async {
     final result = await localDataSource.searchClub(query);
-    return result.fold((failure) => Left(failure), (_) => const Right(null));
+    return result.fold((failure) => Left(failure), (clubs) => Right(clubs));
   }
 }

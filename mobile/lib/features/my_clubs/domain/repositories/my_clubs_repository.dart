@@ -8,5 +8,5 @@ abstract class MyClubsRepository {
   Future<Either<Failure, List<Club>>> filterClub(League league);
   Future<Either<Failure, void>> followClub(String clubId);
   Future<Either<Failure, void>> unfollowClub(String clubId);
-  Future<Either<Failure, void>> searchClub(String query);
+  Future<Either<Failure, List<Club>>> searchClub(String query);
 }
