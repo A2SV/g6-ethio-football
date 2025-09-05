@@ -12,7 +12,7 @@ class FollowClub implements UseCase<Unit, FollowClubParams> {
 
   @override
   Future<Either<Failure, Unit>> call(FollowClubParams params) async {
-    final result = await repository.unfollowClub(params.clubId);
+    final result = await repository.followClub(params.clubId);
     return result.fold((failure) => Left(failure), (_) => Right(unit));
   }
 }

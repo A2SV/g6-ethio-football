@@ -16,7 +16,7 @@ class FilterClub {
 
       final filtered = clubs
           .where(
-            (club) => club.league == league.name,
+            (club) => club.league == league,
           ) // assuming club.league is stored as string
           .toList();
 

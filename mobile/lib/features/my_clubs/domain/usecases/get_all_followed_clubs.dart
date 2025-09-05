@@ -12,6 +12,6 @@ class GetAllFollowedClubs implements UseCase<List<Club>, NoParams> {
 
   @override
   Future<Either<Failure, List<Club>>> call(NoParams params) async {
-    return await repository.getAllClubs();
+    return await repository.getAllFollowedClubs();
   }
 }
