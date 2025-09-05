@@ -1,4 +1,4 @@
-package com.example.ethio_football
+package com.example.new_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

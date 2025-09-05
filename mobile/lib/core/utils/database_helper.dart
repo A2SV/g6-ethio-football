@@ -32,5 +32,52 @@ class DatabaseHelper {
         logoUrl TEXT
       )
     ''');
+    // Insert sample clubs for testing
+    await _insertSampleClubs(db);
+  }
+
+  Future<void> _insertSampleClubs(Database db) async {
+    final sampleClubs = [
+      {
+        'id': '1',
+        'name': 'Saint George',
+        'description': 'Ethiopian Premier League club based in Addis Ababa.',
+        'isFollowed': 0,
+        'short': 'SG',
+        'league': 'ETH',
+        'logoUrl': null,
+      },
+      {
+        'id': '2',
+        'name': 'Ethiopian Coffee',
+        'description': 'Popular club from Addis Ababa.',
+        'isFollowed': 0,
+        'short': 'EC',
+        'league': 'ETH',
+        'logoUrl': null,
+      },
+      {
+        'id': '3',
+        'name': 'Manchester United',
+        'description': 'English Premier League club.',
+        'isFollowed': 0,
+        'short': 'MU',
+        'league': 'EPL',
+        'logoUrl': null,
+      },
+      {
+        'id': '4',
+        'name': 'Chelsea',
+        'description': 'English Premier League club.',
+        'isFollowed': 0,
+        'short': 'CHE',
+        'league': 'EPL',
+        'logoUrl':
+            "https://upload.wikimedia.org/wikipedia/hif/0/0d/Chelsea_FC.png",
+      },
+    ];
+    for (final club in sampleClubs) {
+      await db.insert('clubs', club);
+    }
   }
 }
