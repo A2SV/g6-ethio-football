@@ -1,0 +1,422 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.ethio_football"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="35" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\debug\AndroidManifest.xml:6:5-66
+15-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\debug\AndroidManifest.xml:6:22-64
+16    <!--
+17     Required to query activities that can process text, see:
+18         https://developer.android.com/training/package-visibility and
+19         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+20
+21         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+22    -->
+23    <queries>
+23-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\main\AndroidManifest.xml:39:5-44:15
+24        <intent>
+24-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\main\AndroidManifest.xml:40:9-43:18
+25            <action android:name="android.intent.action.PROCESS_TEXT" />
+25-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\main\AndroidManifest.xml:41:13-72
+25-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\main\AndroidManifest.xml:41:21-70
+26
+27            <data android:mimeType="text/plain" />
+27-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\main\AndroidManifest.xml:42:13-50
+27-->C:\Users\Miko\Desktop\ethio_foot_ball\g6-EthioFootball-Mobile\mobile\android\app\src\main\AndroidManifest.xml:42:19-48
+28        </intent>
+29    </queries>
+30
+31    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+31-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:24:5-79
+31-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:24:22-76
+32    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+32-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:25:5-77
+32-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:25:22-74
+33    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+33-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:26:5-68
+33-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:26:22-65
+34    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+34-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:28:5-82
+34-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:28:22-79
+35    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+35-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:9:5-81
+35-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:9:22-78
+36    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+36-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:10:5-76
+36-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:10:22-73
+37    <uses-permission android:name="android.permission.CALL_PHONE" />
+37-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:11:5-69
+37-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:11:22-66
+38    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+38-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:12:5-71
+38-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:12:22-68
+39
+40    <uses-feature
+40-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:17:5-19:35
+41        android:name="android.hardware.sensor.accelerometer"
+41-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:18:9-61
+42        android:required="true" />
+42-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:19:9-32
+43
+44    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+44-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:21:5-75
+44-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:21:22-72
+45
+46    <permission
+46-->[androidx.core:core:1.13.1] C:\Users\Miko\.gradle\caches\8.9\transforms\d8a48bb5ad55d70b47f69150c7c80e11\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+47        android:name="com.example.ethio_football.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+47-->[androidx.core:core:1.13.1] C:\Users\Miko\.gradle\caches\8.9\transforms\d8a48bb5ad55d70b47f69150c7c80e11\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+48        android:protectionLevel="signature" />
+48-->[androidx.core:core:1.13.1] C:\Users\Miko\.gradle\caches\8.9\transforms\d8a48bb5ad55d70b47f69150c7c80e11\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+49
+50    <uses-permission android:name="com.example.ethio_football.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+50-->[androidx.core:core:1.13.1] C:\Users\Miko\.gradle\caches\8.9\transforms\d8a48bb5ad55d70b47f69150c7c80e11\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+50-->[androidx.core:core:1.13.1] C:\Users\Miko\.gradle\caches\8.9\transforms\d8a48bb5ad55d70b47f69150c7c80e11\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+51    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+51-->[com.android.installreferrer:installreferrer:2.2] C:\Users\Miko\.gradle\caches\8.9\transforms\0f5921b0e66b5736a1fc5647d2036d72\transformed\jetified-installreferrer-2.2\AndroidManifest.xml:9:5-110
+51-->[com.android.installreferrer:installreferrer:2.2] C:\Users\Miko\.gradle\caches\8.9\transforms\0f5921b0e66b5736a1fc5647d2036d72\transformed\jetified-installreferrer-2.2\AndroidManifest.xml:9:22-107
+52
+53    <application
+54        android:name="android.app.Application"
+55        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+55-->[androidx.core:core:1.13.1] C:\Users\Miko\.gradle\caches\8.9\transforms\d8a48bb5ad55d70b47f69150c7c80e11\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+56        android:debuggable="true"
+57        android:extractNativeLibs="true"
+58        android:icon="@mipmap/ic_launcher"
+59        android:label="ethio_football"
+60        android:supportsRtl="true"
+60-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:24:9-35
+61        android:usesCleartextTraffic="true" >
+61-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:25:9-44
+62        <activity
+63            android:name="com.example.ethio_football.MainActivity"
+64            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+65            android:exported="true"
+66            android:hardwareAccelerated="true"
+67            android:launchMode="singleTop"
+68            android:taskAffinity=""
+69            android:theme="@style/LaunchTheme"
+70            android:windowSoftInputMode="adjustResize" >
+71
+72            <!--
+73                 Specifies an Android theme to apply to this Activity as soon as
+74                 the Android process has started. This theme is visible to the user
+75                 while the Flutter UI initializes. After that, this theme continues
+76                 to determine the Window background behind the Flutter UI.
+77            -->
+78            <meta-data
+79                android:name="io.flutter.embedding.android.NormalTheme"
+80                android:resource="@style/NormalTheme" />
+81
+82            <intent-filter>
+83                <action android:name="android.intent.action.MAIN" />
+84
+85                <category android:name="android.intent.category.LAUNCHER" />
+86            </intent-filter>
+87        </activity>
+88        <!--
+89             Don't delete the meta-data below.
+90             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+91        -->
+92        <meta-data
+93            android:name="flutterEmbedding"
+94            android:value="2" />
+95
+96        <service
+96-->[com.google.firebase:firebase-messaging-ktx:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\e1c7ea88e4c19046d3424b87d5def9c0\transformed\jetified-firebase-messaging-ktx-23.1.2\AndroidManifest.xml:25:9-31:19
+97            android:name="com.google.firebase.components.ComponentDiscoveryService"
+97-->[com.google.firebase:firebase-messaging-ktx:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\e1c7ea88e4c19046d3424b87d5def9c0\transformed\jetified-firebase-messaging-ktx-23.1.2\AndroidManifest.xml:26:13-84
+98            android:directBootAware="true"
+98-->[com.google.firebase:firebase-common:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\03ee5fc9b0048da494774ca67e92e091\transformed\jetified-firebase-common-20.3.1\AndroidManifest.xml:34:13-43
+99            android:exported="false" >
+99-->[com.google.firebase:firebase-messaging-ktx:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\e1c7ea88e4c19046d3424b87d5def9c0\transformed\jetified-firebase-messaging-ktx-23.1.2\AndroidManifest.xml:27:13-37
+100            <meta-data
+100-->[com.google.firebase:firebase-messaging-ktx:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\e1c7ea88e4c19046d3424b87d5def9c0\transformed\jetified-firebase-messaging-ktx-23.1.2\AndroidManifest.xml:28:13-30:85
+101                android:name="com.google.firebase.components:com.google.firebase.messaging.ktx.FirebaseMessagingKtxRegistrar"
+101-->[com.google.firebase:firebase-messaging-ktx:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\e1c7ea88e4c19046d3424b87d5def9c0\transformed\jetified-firebase-messaging-ktx-23.1.2\AndroidManifest.xml:29:17-126
+102                android:value="com.google.firebase.components.ComponentRegistrar" />
+102-->[com.google.firebase:firebase-messaging-ktx:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\e1c7ea88e4c19046d3424b87d5def9c0\transformed\jetified-firebase-messaging-ktx-23.1.2\AndroidManifest.xml:30:17-82
+103            <meta-data
+103-->[com.google.firebase:firebase-common-ktx:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\2213b1d410a81a0ee69590e159a37106\transformed\jetified-firebase-common-ktx-20.3.1\AndroidManifest.xml:14:13-16:85
+104                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonKtxRegistrar"
+104-->[com.google.firebase:firebase-common-ktx:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\2213b1d410a81a0ee69590e159a37106\transformed\jetified-firebase-common-ktx-20.3.1\AndroidManifest.xml:15:17-113
+105                android:value="com.google.firebase.components.ComponentRegistrar" />
+105-->[com.google.firebase:firebase-common-ktx:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\2213b1d410a81a0ee69590e159a37106\transformed\jetified-firebase-common-ktx-20.3.1\AndroidManifest.xml:16:17-82
+106            <meta-data
+106-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:55:13-57:85
+107                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+107-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:56:17-119
+108                android:value="com.google.firebase.components.ComponentRegistrar" />
+108-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:57:17-82
+109            <meta-data
+109-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\Miko\.gradle\caches\8.9\transforms\77b42b79c7a9ffc83aa2bd1a9506c4e1\transformed\jetified-firebase-datatransport-18.1.7\AndroidManifest.xml:27:13-29:85
+110                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+110-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\Miko\.gradle\caches\8.9\transforms\77b42b79c7a9ffc83aa2bd1a9506c4e1\transformed\jetified-firebase-datatransport-18.1.7\AndroidManifest.xml:28:17-115
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\Miko\.gradle\caches\8.9\transforms\77b42b79c7a9ffc83aa2bd1a9506c4e1\transformed\jetified-firebase-datatransport-18.1.7\AndroidManifest.xml:29:17-82
+112            <meta-data
+112-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\Miko\.gradle\caches\8.9\transforms\dbcfc53b98bacc3e35dd1dc0d3c810f4\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:17:13-19:85
+113                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+113-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\Miko\.gradle\caches\8.9\transforms\dbcfc53b98bacc3e35dd1dc0d3c810f4\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:18:17-127
+114                android:value="com.google.firebase.components.ComponentRegistrar" />
+114-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\Miko\.gradle\caches\8.9\transforms\dbcfc53b98bacc3e35dd1dc0d3c810f4\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:19:17-82
+115        </service>
+116
+117        <receiver
+117-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:31:9-38:20
+118            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+118-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:32:13-78
+119            android:exported="true"
+119-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:33:13-36
+120            android:permission="com.google.android.c2dm.permission.SEND" >
+120-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:34:13-73
+121            <intent-filter>
+121-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:35:13-37:29
+122                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+122-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:36:17-81
+122-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:36:25-78
+123            </intent-filter>
+124        </receiver>
+125        <!--
+126             FirebaseMessagingService performs security checks at runtime,
+127             but set to not exported to explicitly avoid allowing another app to call it.
+128        -->
+129        <service
+129-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:44:9-51:19
+130            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+130-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:45:13-82
+131            android:directBootAware="true"
+131-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:46:13-43
+132            android:exported="false" >
+132-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:47:13-37
+133            <intent-filter android:priority="-500" >
+133-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:48:13-50:29
+133-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:48:28-51
+134                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+134-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:49:17-78
+134-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\Miko\.gradle\caches\8.9\transforms\554f6c2b0245e95c23c1e0fb01d031fb\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:49:25-75
+135            </intent-filter>
+136        </service>
+137
+138        <provider
+138-->[com.google.firebase:firebase-common:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\03ee5fc9b0048da494774ca67e92e091\transformed\jetified-firebase-common-20.3.1\AndroidManifest.xml:25:9-30:39
+139            android:name="com.google.firebase.provider.FirebaseInitProvider"
+139-->[com.google.firebase:firebase-common:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\03ee5fc9b0048da494774ca67e92e091\transformed\jetified-firebase-common-20.3.1\AndroidManifest.xml:26:13-77
+140            android:authorities="com.example.ethio_football.firebaseinitprovider"
+140-->[com.google.firebase:firebase-common:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\03ee5fc9b0048da494774ca67e92e091\transformed\jetified-firebase-common-20.3.1\AndroidManifest.xml:27:13-72
+141            android:directBootAware="true"
+141-->[com.google.firebase:firebase-common:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\03ee5fc9b0048da494774ca67e92e091\transformed\jetified-firebase-common-20.3.1\AndroidManifest.xml:28:13-43
+142            android:exported="false"
+142-->[com.google.firebase:firebase-common:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\03ee5fc9b0048da494774ca67e92e091\transformed\jetified-firebase-common-20.3.1\AndroidManifest.xml:29:13-37
+143            android:initOrder="100" />
+143-->[com.google.firebase:firebase-common:20.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\03ee5fc9b0048da494774ca67e92e091\transformed\jetified-firebase-common-20.3.1\AndroidManifest.xml:30:13-36
+144
+145        <activity
+145-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Miko\.gradle\caches\8.9\transforms\8087aa38e481b4eb0eee7ca58661e5fa\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+146            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+146-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Miko\.gradle\caches\8.9\transforms\8087aa38e481b4eb0eee7ca58661e5fa\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+147            android:exported="false"
+147-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Miko\.gradle\caches\8.9\transforms\8087aa38e481b4eb0eee7ca58661e5fa\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+148            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+148-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Miko\.gradle\caches\8.9\transforms\8087aa38e481b4eb0eee7ca58661e5fa\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+149
+150        <receiver
+150-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:26:9-37:20
+151            android:name="io.mob.resu.reandroidsdk.NotificationActionReceiver"
+151-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:27:13-79
+152            android:exported="true" >
+152-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:28:13-36
+153            <intent-filter>
+153-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:29:13-36:29
+154                <action android:name="clickActions" />
+154-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:30:17-55
+154-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:30:25-52
+155                <action android:name="postmessage" />
+155-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:31:17-54
+155-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:31:25-51
+156                <action android:name="CustomCTA" />
+156-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:32:17-52
+156-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:32:25-49
+157                <action android:name="CarouselLeft" />
+157-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:33:17-55
+157-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:33:25-52
+158                <action android:name="CarouselRight" />
+158-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:34:17-56
+158-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:34:25-53
+159                <action android:name="notification_cancelled" />
+159-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:35:17-65
+159-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:35:25-62
+160            </intent-filter>
+161        </receiver>
+162        <receiver
+162-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:38:9-40:39
+163            android:name="io.mob.resu.reandroidsdk.ReNotificationBroadcastReceiver"
+163-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:39:13-84
+164            android:exported="true" />
+164-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:40:13-36
+165        <receiver
+165-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:41:9-44:20
+166            android:name="io.mob.resu.reandroidsdk.ScheduleNotification"
+166-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:42:13-73
+167            android:exported="true" >
+167-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:43:13-36
+168        </receiver>
+169
+170        <service
+170-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:46:9-49:44
+171            android:name="io.mob.resu.reandroidsdk.AppKillService"
+171-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:47:13-67
+172            android:exported="true"
+172-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:48:13-36
+173            android:stopWithTask="false" />
+173-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:49:13-41
+174
+175        <activity
+175-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:51:9-55:20
+176            android:name="io.mob.resu.reandroidsdk.ReNotificationActivity"
+176-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:52:13-75
+177            android:exported="true"
+177-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:53:13-36
+178            android:windowSoftInputMode="stateHidden|adjustPan" >
+178-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:54:13-64
+179        </activity>
+180
+181        <receiver
+181-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:57:9-64:20
+182            android:name="io.mob.resu.reandroidsdk.InstallReferrerReceiver"
+182-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:58:13-76
+183            android:exported="true" >
+183-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:59:13-36
+184            <intent-filter>
+184-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:60:13-63:29
+185                <action android:name="com.android.vending.INSTALL_REFERRER" />
+185-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:61:17-79
+185-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:61:25-76
+186                <action android:name="android.intent.action.PACKAGE_FIRST_LAUNCH" />
+186-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:62:17-85
+186-->[io.resu:ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4:-SNAPSHOT] C:\Users\Miko\.gradle\caches\8.9\transforms\dc9c6ed4c842807d984199b1cbbf1a84\transformed\jetified-ReAndroidSDK_3c675be0_b0db_4d2e_a2c6_8ffe8a6e63b4--SNAPSHOT\AndroidManifest.xml:62:25-82
+187            </intent-filter>
+188        </receiver>
+189
+190        <uses-library
+190-->[androidx.window:window:1.2.0] C:\Users\Miko\.gradle\caches\8.9\transforms\0e96cba001e5b7ee59a4cea5fc90dede\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+191            android:name="androidx.window.extensions"
+191-->[androidx.window:window:1.2.0] C:\Users\Miko\.gradle\caches\8.9\transforms\0e96cba001e5b7ee59a4cea5fc90dede\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+192            android:required="false" />
+192-->[androidx.window:window:1.2.0] C:\Users\Miko\.gradle\caches\8.9\transforms\0e96cba001e5b7ee59a4cea5fc90dede\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+193        <uses-library
+193-->[androidx.window:window:1.2.0] C:\Users\Miko\.gradle\caches\8.9\transforms\0e96cba001e5b7ee59a4cea5fc90dede\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+194            android:name="androidx.window.sidecar"
+194-->[androidx.window:window:1.2.0] C:\Users\Miko\.gradle\caches\8.9\transforms\0e96cba001e5b7ee59a4cea5fc90dede\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+195            android:required="false" />
+195-->[androidx.window:window:1.2.0] C:\Users\Miko\.gradle\caches\8.9\transforms\0e96cba001e5b7ee59a4cea5fc90dede\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+196
+197        <meta-data
+197-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Miko\.gradle\caches\8.9\transforms\a7f0fd50f29508dc4f45fbbb1c9f4d5e\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+198            android:name="com.google.android.gms.version"
+198-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Miko\.gradle\caches\8.9\transforms\a7f0fd50f29508dc4f45fbbb1c9f4d5e\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+199            android:value="@integer/google_play_services_version" />
+199-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Miko\.gradle\caches\8.9\transforms\a7f0fd50f29508dc4f45fbbb1c9f4d5e\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+200
+201        <provider
+201-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Miko\.gradle\caches\8.9\transforms\2cbe2949530dc5cc73738bb0d99d77e8\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+202            android:name="androidx.startup.InitializationProvider"
+202-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Miko\.gradle\caches\8.9\transforms\2cbe2949530dc5cc73738bb0d99d77e8\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:25:13-67
+203            android:authorities="com.example.ethio_football.androidx-startup"
+203-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Miko\.gradle\caches\8.9\transforms\2cbe2949530dc5cc73738bb0d99d77e8\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:26:13-68
+204            android:exported="false" >
+204-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Miko\.gradle\caches\8.9\transforms\2cbe2949530dc5cc73738bb0d99d77e8\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:27:13-37
+205            <meta-data
+205-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Miko\.gradle\caches\8.9\transforms\2cbe2949530dc5cc73738bb0d99d77e8\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+206                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+206-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Miko\.gradle\caches\8.9\transforms\2cbe2949530dc5cc73738bb0d99d77e8\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+207                android:value="androidx.startup" />
+207-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Miko\.gradle\caches\8.9\transforms\2cbe2949530dc5cc73738bb0d99d77e8\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+208            <meta-data
+208-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+209                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+209-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+210                android:value="androidx.startup" />
+210-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+211        </provider>
+212
+213        <receiver
+213-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+214            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+214-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+215            android:directBootAware="false"
+215-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+216            android:enabled="true"
+216-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+217            android:exported="true"
+217-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+218            android:permission="android.permission.DUMP" >
+218-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+219            <intent-filter>
+219-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+220                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+220-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+220-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+221            </intent-filter>
+222            <intent-filter>
+222-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+223                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+223-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+223-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+224            </intent-filter>
+225            <intent-filter>
+225-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+226                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+226-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+226-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+227            </intent-filter>
+228            <intent-filter>
+228-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+229                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+229-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+229-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Miko\.gradle\caches\8.9\transforms\9f57daf0cf65909a2c3fae54b646269c\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+230            </intent-filter>
+231        </receiver>
+232
+233        <service
+233-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\0d63cd1c81743cb44037854333562884\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:28:9-34:19
+234            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+234-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\0d63cd1c81743cb44037854333562884\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:29:13-103
+235            android:exported="false" >
+235-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\0d63cd1c81743cb44037854333562884\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:30:13-37
+236            <meta-data
+236-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\0d63cd1c81743cb44037854333562884\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:31:13-33:39
+237                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+237-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\0d63cd1c81743cb44037854333562884\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:32:17-94
+238                android:value="cct" />
+238-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\0d63cd1c81743cb44037854333562884\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:33:17-36
+239        </service>
+240        <service
+240-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\14a724b0c105cb92f8ee96785dea2976\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:26:9-30:19
+241            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+241-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\14a724b0c105cb92f8ee96785dea2976\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:27:13-117
+242            android:exported="false"
+242-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\14a724b0c105cb92f8ee96785dea2976\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:28:13-37
+243            android:permission="android.permission.BIND_JOB_SERVICE" >
+243-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\14a724b0c105cb92f8ee96785dea2976\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:29:13-69
+244        </service>
+245
+246        <receiver
+246-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\14a724b0c105cb92f8ee96785dea2976\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:32:9-34:40
+247            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+247-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\14a724b0c105cb92f8ee96785dea2976\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:33:13-132
+248            android:exported="false" />
+248-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Miko\.gradle\caches\8.9\transforms\14a724b0c105cb92f8ee96785dea2976\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:34:13-37
+249    </application>
+250
+251</manifest>
