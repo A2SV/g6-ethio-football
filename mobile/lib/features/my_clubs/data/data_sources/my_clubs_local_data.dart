@@ -3,7 +3,6 @@ import 'package:ethio_football/core/errors/failures.dart';
 import 'package:ethio_football/core/utils/database_helper.dart';
 import 'package:ethio_football/features/my_clubs/data/models/club_model.dart';
 import 'package:ethio_football/features/my_clubs/domain/entities/club.dart';
-import 'package:sqflite/sqflite.dart';
 
 abstract class MyClubsLocalDataSource {
   Future<Either<Failure, List<Club>>> getAllClubs();
