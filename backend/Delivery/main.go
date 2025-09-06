@@ -16,7 +16,7 @@ func main() {
 
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("error in loading .env file")
+		fmt.Println("error in loading .env file, locally")
 	}
 
 	// Redis & Team setup
