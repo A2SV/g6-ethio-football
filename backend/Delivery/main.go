@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 
 	controller "github.com/abrshodin/ethio-fb-backend/Delivery/Controller"
 	routers "github.com/abrshodin/ethio-fb-backend/Delivery/Router"
