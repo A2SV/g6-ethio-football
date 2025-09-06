@@ -1,0 +1,1 @@
+enum ThemeType { LIGHT, DARK, SYSTEM_DEFAULT }
