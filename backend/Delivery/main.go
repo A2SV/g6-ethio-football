@@ -11,9 +11,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/joho/godotenv"
 	"os"
+	"time"
 )
 
 func main() {
+
+	
 
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -72,6 +75,13 @@ func main() {
 	routers.RegisterNewsRoutes(router, newsHandler)
 	routers.RegisterRoute(router, intentController, answerController)
 
-	router.Use(cors.Default())
+	router.Use(cors.New(cors.Config{
+		AllowAllOrigins:  true, 
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"*"}, 
+		ExposeHeaders:    []string{"*"},
+		AllowCredentials: true,         
+		MaxAge:           24 * time.Hour,
+	}))
 	router.Run()
 }
