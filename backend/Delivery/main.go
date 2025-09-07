@@ -81,7 +81,7 @@ func main() {
 		AllowHeaders:     []string{"*"}, 
 		ExposeHeaders:    []string{"*"},
 		AllowCredentials: true,         
-		MaxAge:           24 * time.Hour,
+		MaxAge:           7 * 24 * time.Hour,
 	}))
 	router.Run()
 }
