@@ -74,7 +74,7 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 	case "ETH":
 		leagueID = 363
 	case "EPL":
-		leagueID = 46
+		leagueID = 39
 	}
 
 	switch intent.Topic {
