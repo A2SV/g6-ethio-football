@@ -8,10 +8,8 @@ import (
 	infrastructure "github.com/abrshodin/ethio-fb-backend/Infrastructure"
 	repository "github.com/abrshodin/ethio-fb-backend/Repository"
 	usecase "github.com/abrshodin/ethio-fb-backend/Usecase"
-	"github.com/gin-contrib/cors"
 	"github.com/joho/godotenv"
 	"os"
-	"time"
 )
 
 func main() {
@@ -67,21 +65,18 @@ func main() {
 														fixtureUC,
 													)
 	
+
 	// Router
 	router := routers.NewRouter(fixtureUC, newsUC)
+
+
+
 	routers.RegisterTeamRoutes(router, teamHandler)
 	routers.RegisterAPISercice(router, historyHandler)
 	routers.RegisterStandingsRoutes(router, standingsHandler)
 	routers.RegisterNewsRoutes(router, newsHandler)
 	routers.RegisterRoute(router, intentController, answerController)
 
-	router.Use(cors.New(cors.Config{
-		AllowAllOrigins:  true, 
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"*"}, 
-		ExposeHeaders:    []string{"*"},
-		AllowCredentials: true,         
-		MaxAge:           7 * 24 * time.Hour,
-	}))
+	
 	router.Run()
 }
