@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	// "log"
 
@@ -34,10 +35,15 @@ func (tu *TeamUsecase) AddTeam(ctx context.Context, team *domain.Team) error {
 }
 
 func (tu *TeamUsecase) Statistics(ctx context.Context, league, season int, team string) (*domain.TeamComparison, error){
-	teamID := 1001
-	if team == "EthiopianCoffee" {
-		teamID = 1004
-	} 
+
+	teamID, err := tu.teamRepo.GetID(ctx, team)
+	if err != nil {
+		fmt.Println("error in statistics while reading data from redis")
+		return nil, domain.ErrInternalServer
+	}
+
+	fmt.Println("api called")
+
 	return tu.api.Statistics(league, season, teamID)
 }
 
@@ -92,13 +98,11 @@ func (uc *fixtureUsecase) GetFixtures(ctx context.Context, league, team, season,
 		return nil, errors.New("league is required")
 	}
 
-	// Call repo once and use its result
 	fixtures, err := uc.repo.GetFixtures(league, team, season, from, to)
 	if err != nil {
-		// propagate error (repo may return non-nil err on auth/network issues)
 		return nil, err
 	}
-	// always return empty slice instead of nil to avoid JSON "null"
+	
 	if fixtures == nil {
 		return []domain.Fixture{}, nil
 	}

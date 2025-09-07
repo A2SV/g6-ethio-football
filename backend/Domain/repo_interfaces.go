@@ -7,6 +7,7 @@ import (
 type IRedisRepo interface {
 	Get(ctx context.Context, teamId string) (*Team, error)
 	Add(ctx context.Context, team *Team) error
+	GetID(ctx context.Context, leagueID string) (int, error) 
 }
 
 type IStandingsRepo interface {

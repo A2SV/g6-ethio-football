@@ -35,38 +35,37 @@ func RedisConnect() *redis.Client {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	return rdb
 }
 
-// FetchFixturesFromAPI calls API-Football and returns simplified maps for Repository layer.
-// Keys returned in each map:
-//
-//	id, league, home_id, away_id, date, status, score, home_logo, away_logo, last_update
+// FetchFixturesFromAPI calls API-Football and returns Fixture structs for Repository layer.
 //
 // Accepts:
 //
-//	league: either "EPL" (will map to 39) or a numeric league id string (e.g. "39")
+//	league: either "EPL" (will map to 46) or "ETH" (will map to 363) or a numeric league id string
 //	team: optional team id (numeric string) — names are NOT searched here
 //	from,to: optional dates in YYYY-MM-DD
 //
 // Returns error if API key missing or upstream error.
-func FetchFixturesFromAPI(league, team, season, from, to string) ([]map[string]string, error) {
-	apiKey := os.Getenv("API_FOOTBALL_KEY")
+func FetchFixturesFromAPI(league, team, season, from, to string) ([]domain.Fixture, error) {
+	apiKey := os.Getenv("API_SPORTS_API_KEY")
 	if apiKey == "" {
 		return nil, fmt.Errorf("missing API_FOOTBALL_KEY in .env")
 	}
 
-	// Resolve league param: allow "EPL" -> 39, numeric IDs as passed
+	// Resolve league param: allow "EPL" -> 39, "ETH" -> 363, numeric IDs as passed
 	leagueID := 0
 	if league == "EPL" {
 		leagueID = 39
+	} else if league == "ETH" {
+		leagueID = 363
 	} else {
 		// try numeric
 		if n, err := strconv.Atoi(league); err == nil {
 			leagueID = n
 		} else {
-			return nil, fmt.Errorf("unknown league code: %s (use 'EPL' or numeric league id)", league)
+			return nil, fmt.Errorf("unknown league code: %s (use 'EPL', 'ETH', or numeric league id)", league)
 		}
 	}
 
@@ -74,6 +73,7 @@ func FetchFixturesFromAPI(league, team, season, from, to string) ([]map[string]s
 	endpoint := "/fixtures"
 	params := url.Values{}
 	params.Set("league", strconv.Itoa(leagueID))
+	
 	// season optional; API often needs season for historical queries; leaving unset uses API default/current
 	if from != "" {
 		params.Set("from", from) // YYYY-MM-DD
@@ -98,7 +98,8 @@ func FetchFixturesFromAPI(league, team, season, from, to string) ([]map[string]s
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("x-apisports-key", apiKey)
+	req.Header.Set("x-rapidapi-key", apiKey)
+	req.Header.Set("x-rapidapi-host", "v3.football.api-sports.io")
 	// optional: req.Header.Set("Accept", "application/json")
 
 	client := &http.Client{Timeout: 12 * time.Second}
@@ -119,49 +120,37 @@ func FetchFixturesFromAPI(league, team, season, from, to string) ([]map[string]s
 		return nil, err
 	}
 
-	// Use your domain.APIResponse shapes (you already defined them in Domain)
-	var apiResp domain.APIResponse
+	fmt.Println(string(b))
+
+	// Use the specific FixturesAPIResponse for fixtures endpoint
+	var apiResp domain.FixturesAPIResponse
 	if err := json.Unmarshal(b, &apiResp); err != nil {
-		// parsing failed - return raw error to help debugging
+		fmt.Printf("Failed to unmarshal API response: %v\n", err)
 		return nil, fmt.Errorf("failed to unmarshal API response: %w", err)
 	}
 
-	out := make([]map[string]string, 0, len(apiResp.Response))
+	fmt.Println("api Response :", apiResp)
+
+
+
+	fixtures := []domain.Fixture{}
 	now := time.Now().UTC().Format(time.RFC3339)
 
 	for _, r := range apiResp.Response {
-		idStr := strconv.Itoa(r.Fixture.ID)
-		date := r.Fixture.Date // API returns ISO time string (RFC3339)
-		homeName := r.Teams.Home.Name
-		awayName := r.Teams.Away.Name
-		homeLogo := r.Teams.Home.Logo
-		awayLogo := r.Teams.Away.Logo
-
-		// score/status handling
-		scoreStr := ""
-		status := "SCHEDULED"
-		if r.Goals.Home != nil && r.Goals.Away != nil {
-			scoreStr = fmt.Sprintf("%d-%d", *r.Goals.Home, *r.Goals.Away)
-			status = "FT"
-		} else if r.Fixture.Date != "" {
-			// if fixture date in future, keep SCHEDULED; otherwise leave status as provided, if any
-			status = "SCHEDULED"
+		fixture := domain.Fixture{
+			ID:           r.Fixture.Date,
+			DateUTC:      r.Fixture.Date,
+			HomeName:      r.Teams.Home.Name,
+			AwayName:      r.Teams.Away.Name,
+			Status:      	"scheduled",
+			HomeLogo:    r.Teams.Home.Logo,
+			AwayLogo:    r.Teams.Away.Logo,
+			LastUpdated: now,
 		}
 
-		m := map[string]string{
-			"id":          idStr,
-			"league":      r.League.Name,
-			"home_id":     homeName,
-			"away_id":     awayName,
-			"date":        date,
-			"status":      status,
-			"score":       scoreStr,
-			"home_logo":   homeLogo,
-			"away_logo":   awayLogo,
-			"last_update": now,
-		}
-		out = append(out, m)
+		fixtures = append(fixtures, fixture)
 	}
 
-	return out, nil
+	
+	return fixtures, nil
 }

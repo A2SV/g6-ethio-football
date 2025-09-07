@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"time"
 
 	domain "github.com/abrshodin/ethio-fb-backend/Domain"
@@ -69,6 +70,21 @@ func (tr *teamRepo) Add(ctx context.Context, team *domain.Team) error {
 	return nil
 }
 
+func (tr *teamRepo) GetID(ctx context.Context, team string) (int, error) {
+
+	val, err := tr.rdb.Get(ctx, team).Result()
+	if err != nil {
+		return 0, domain.ErrTeamNotFound
+	}
+
+	id, err := strconv.Atoi(val)
+	if err != nil {
+		return 0, domain.ErrInternalServer
+	}
+
+	return id, nil
+}
+
 // FixtureRepo abstracts fixture fetching
 type FixtureRepo interface {
 	GetFixtures(league, team, season, from, to string) ([]domain.Fixture, error)
@@ -103,29 +119,9 @@ func (r *APIRepo) GetFixtures(league, team, season, from, to string) ([]domain.F
 	}
 
 	// Fetch from API
-	raw, err := infrastructure.FetchFixturesFromAPI(league, team, season, from, to)
+	fixtures, err := infrastructure.FetchFixturesFromAPI(league, team, season, from, to)
 	if err != nil {
-		// Log for debugging; but return an empty slice to the client (avoid "fixtures": null)
-		fmt.Printf("FetchFixturesFromAPI failed: league=%s team=%s season=%s from=%s to=%s err=%v\n", league, team, season, from, to, err)
-		// Ensure we return an empty slice (not nil) so JSON is [] in response
 		return []domain.Fixture{}, nil
-	}
-
-	var fixtures []domain.Fixture
-	for _, item := range raw {
-		fixture := domain.Fixture{
-			ID:          item["id"],
-			League:      item["league"],
-			DateUTC:     item["date"],
-			HomeID:      item["home_id"],
-			AwayID:      item["away_id"],
-			Status:      item["status"],
-			Score:       item["score"],
-			HomeLogo:    item["home_logo"],
-			AwayLogo:    item["away_logo"],
-			LastUpdated: item["last_update"],
-		}
-		fixtures = append(fixtures, fixture)
 	}
 
 	// Cache result for 5 minutes (best-effort)

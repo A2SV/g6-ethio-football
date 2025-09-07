@@ -59,6 +59,7 @@ func main() {
 														newsHandler,
 														teamHandler,
 														answerController,
+														fixtureUC,
 													)
 	
 	// Router

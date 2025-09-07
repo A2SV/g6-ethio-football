@@ -48,7 +48,7 @@ func (hc *FixturesController) PreviousMatchHistory(c *gin.Context) {
 
 	var leagueID int
 	if league == "EPL" {
-		leagueID = 44
+		leagueID = 39
 	} else {
 		leagueID = 363
 	}
@@ -77,7 +77,7 @@ func (hc *FixturesController) PreviousMatchHistory(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, gin.H{"result": result, "source": "api"})
 }
 
-func(fc *FixturesController) LiveFixtures (c *gin.Context){
+func (fc *FixturesController) LiveFixtures(c *gin.Context) {
 
 	league := c.Query("league")
 	if league != "EPL" && league != "ETH" {
@@ -93,9 +93,42 @@ func(fc *FixturesController) LiveFixtures (c *gin.Context){
 	// }
 
 	if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error" : err.Error()})
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.IndentedJSON(http.StatusOK, gin.H{"result": result})
+}
+
+func (fc *FixturesController) Fixture(c *gin.Context){
+
+		league := c.Query("league")
+		team := c.Query("team")
+		season := c.Query("season")
+		from := c.Query("from")
+		to := c.Query("to")
+
+		// Validate required parameters
+		if league == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "league parameter is required"})
+			return
+		}
+
+		fixtures, err := fc.FixureUC.GetFixtures(
+			c.Request.Context(), // Pass context
+			league,
+			team,
+			season,
+			from,
+			to,
+		)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		if fixtures == nil {
+			fixtures = []domain.Fixture{}
+		}
+
+		c.JSON(http.StatusOK, gin.H{"fixtures": fixtures})
 }

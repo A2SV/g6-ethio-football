@@ -13,7 +13,8 @@ type IFixturesUsecase interface {
 	FetchAndStore(ctx context.Context, league string, leagueID int, q domain.RoundQuery) (*[]domain.PrevFixtures, error)
 	GetCachedByRound(ctx context.Context, q domain.RoundQuery) (*[]domain.PrevFixtures, error)
 	ResolveRoundWindow(ctx context.Context, q domain.RoundQuery) (domain.RoundQuery, error)
-	 GetLiveMatches (league string)(*[]domain.PrevFixtures, error)
+	GetLiveMatches (league string)(*[]domain.PrevFixtures, error)
+	GetFixtures(ctx context.Context, league, team, season, from, to string) ([]domain.Fixture, error)
 }
 
 func NewFixturesUsecase(api domain.IAPIService, repo repository.IFixturesRepo) IFixturesUsecase {
@@ -120,3 +121,20 @@ func (uc *FixturesUsecase) ResolveRoundWindow(ctx context.Context, q domain.Roun
 func(uc *FixturesUsecase) GetLiveMatches (league string)(*[]domain.PrevFixtures, error){
 	return uc.api.LiveFixtures(league)
 }
+
+func (uc *FixturesUsecase) GetFixtures(ctx context.Context, league, team, season, from, to string) ([]domain.Fixture, error) {
+	if league == "" {
+		return nil, errors.New("league is required")
+	}
+
+	fixtures, err := uc.repo.GetFixtures(league, team, season, from, to)
+	if err != nil {
+		return nil, err
+	}
+	
+	if fixtures == nil {
+		return []domain.Fixture{}, nil
+	}
+	return fixtures, nil
+}
+

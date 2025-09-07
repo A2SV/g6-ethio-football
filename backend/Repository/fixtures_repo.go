@@ -4,8 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	domain "github.com/abrshodin/ethio-fb-backend/Domain"
+	infrastructure "github.com/abrshodin/ethio-fb-backend/Infrastructure"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -14,6 +16,7 @@ type IFixturesRepo interface {
 	SaveRoundWindow(ctx context.Context, q domain.RoundQuery) error
 	GetFixturesByRound(ctx context.Context, q domain.RoundQuery) (*[]domain.PrevFixtures, error)
 	GetRoundWindow(ctx context.Context, q domain.RoundQuery) (from string, to string, err error)
+	GetFixtures(league, team, season, from, to string) ([]domain.Fixture, error)
 }
 
 func NewPrevFixturesRepo(rdb *redis.Client) IFixturesRepo {
@@ -89,4 +92,34 @@ func (p *FixturesRepo) GetRoundWindow(ctx context.Context, q domain.RoundQuery) 
 		return "", "", err
 	}
 	return v.From, v.To, nil
+}
+
+func (r *FixturesRepo) GetFixtures(league, team, season, from, to string) ([]domain.Fixture, error) {
+	ctx := context.Background()
+
+	// Try cache first
+	if r.rdb != nil {
+		if raw, err := r.rdb.Get(ctx, cacheKey(league, team, season, from, to)).Result(); err == nil {
+			var cached []domain.Fixture
+			if err := json.Unmarshal([]byte(raw), &cached); err == nil {
+				return cached, nil
+			}
+			// continue if unmarshal fails
+		}
+	}
+
+	// Fetch from API
+	fixtures, err := infrastructure.FetchFixturesFromAPI(league, team, season, from, to)
+	if err != nil {
+		return []domain.Fixture{}, nil
+	}
+
+	// Cache result for 5 minutes (best-effort)
+	if r.rdb != nil {
+		if b, err := json.Marshal(fixtures); err == nil {
+			_ = r.rdb.Set(ctx, cacheKey(league, team, season, from, to), b, 7 * 24 * time.Hour).Err()
+		}
+	}
+
+	return fixtures, nil
 }

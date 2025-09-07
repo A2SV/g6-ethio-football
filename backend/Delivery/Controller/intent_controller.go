@@ -2,6 +2,7 @@ package controller
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -17,6 +18,7 @@ type IntentController struct {
 	newsUC      *NewsController
 	teamUC 		*TeamController
 	answerC     *AnswerController
+	fixtureUC   usecase.FixtureUsecase
 }
 
 func NewIntentController(
@@ -25,6 +27,7 @@ func NewIntentController(
 	ns *NewsController, 
 	tc *TeamController, 
 	answerHander *AnswerController,
+	fixtureUC   usecase.FixtureUsecase,
 	) *IntentController {
 
 	return &IntentController{
@@ -33,6 +36,7 @@ func NewIntentController(
 		newsUC: ns,
 		teamUC: tc,
 		answerC: answerHander,
+		fixtureUC: fixtureUC,
 	}
 }
 
@@ -60,6 +64,8 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 		return
 	}
 
+	fmt.Println("intent : ", intent)
+
 	var data any
 	season := 2022
 	leagueID := 0
@@ -68,17 +74,27 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 	case "ETH":
 		leagueID = 363
 	case "EPL":
-		leagueID = 39
+		leagueID = 46
 	}
 
 	switch intent.Topic {
 	case "fixture":
-		// TODO: integrate fixture API
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Not Implemented Yet"})
-		return
+
+		if len(intent.Teams) > 1 {
+			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "More than one team is supported for fixiture at a time"})
+			return
+		}
+
+		data, err = h.fixtureUC.GetFixtures(ctx, intent.League, "4116", "2022", "2022-08-01", "2022-10-10")
+		fmt.Println("data :", data)
+		if err != nil {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "err while fetching data for teams fixtire"})
+			return
+		}
 
 	case "table":
 		data, err = h.standingUC.standingsUsecase.GetStandings(ctx, leagueID, season)
+		fmt.Println("data :", data)
 		if err != nil {
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Error while fetching standings"})
 			return
@@ -111,6 +127,7 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 
 		team1Data, err := h.teamUC.teamUsecase.Statistics(ctx, leagueID, season, teamA)
 		if err != nil {
+			fmt.Println("error", err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Error while fetching data for team A"})
 			return
 		}
@@ -125,13 +142,26 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 			TeamA: team1Data,
 			TeamB: team2Data,
 		}
+
+		cData := map[string]interface{}{"data": data}
+
+		answerContext := domain.AnswerContext{
+			Topic:       intent.Topic,
+			Language:    intent.Language,
+			Source:      "api",
+			Freshness:   time.Now(),
+			ContextData: cData,
+		}
+
+		c.IndentedJSON(http.StatusOK, gin.H{"answer" : answerContext})
+		return
+
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"error": "unsupported topic"})
 		return
 	}
 
 	cData := map[string]interface{}{"data": data}
-
 	answerContext := domain.AnswerContext{
 		Topic:       intent.Topic,
 		Language:    intent.Language,

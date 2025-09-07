@@ -26,6 +26,12 @@ func NewRouter(fixtureUC usecase.FixtureUsecase, newsUC *usecase.NewsUseCase) *g
 		from := c.Query("from")
 		to := c.Query("to")
 
+		// Validate required parameters
+		if league == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "league parameter is required"})
+			return
+		}
+
 		fixtures, err := fixtureUC.GetFixtures(
 			c.Request.Context(), // Pass context
 			league,
@@ -35,22 +41,21 @@ func NewRouter(fixtureUC usecase.FixtureUsecase, newsUC *usecase.NewsUseCase) *g
 			to,
 		)
 		if err != nil {
-			// Log error server-side and continue returning empty fixtures
-			c.JSON(http.StatusOK, gin.H{"fixtures": []domain.Fixture{}})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+		
 		if fixtures == nil {
 			fixtures = []domain.Fixture{}
 		}
+
 		c.JSON(http.StatusOK, gin.H{"fixtures": fixtures})
 	})
 
-	
-	
 	return router
 }
 
-func RegisterNewsRoutes(router *gin.Engine, newsHandler *controller.NewsController){
+func RegisterNewsRoutes(router *gin.Engine, newsHandler *controller.NewsController) {
 
 	newsRouter := router.Group("/news")
 

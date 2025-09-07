@@ -2,13 +2,13 @@ package domain
 
 // Team represents a football team
 type Team struct {
-	ID       string    `json:"id"`
-	Name     string    `json:"name"`
-	Short    string    `json:"short"`
-	League   string    `json:"league"`
-	CrestURL string    `json:"crest_url"`
-	Bio      string    `json:"bio"`
-	Fixtures []Fixture     
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Short    string `json:"short"`
+	League   string `json:"league"`
+	CrestURL string `json:"crest_url"`
+	Bio      string `json:"bio"`
+	Fixtures []Fixture
 }
 
 // Fixture represents a scheduled or completed match
@@ -17,8 +17,8 @@ type Fixture struct {
 	ID          string `json:"id"`
 	League      string `json:"league"`
 	DateUTC     string `json:"date_utc"` // ISO string
-	HomeID      string `json:"home_id"`
-	AwayID      string `json:"away_id"`
+	HomeName      string `json:"home_name"`
+	AwayName      string `json:"away_name"`
 	Status      string `json:"status"`
 	Score       string `json:"score"`
 	HomeLogo    string `json:"home_logo,omitempty"`
@@ -60,20 +60,38 @@ type Match struct {
 	Teams   Teams    `json:"teams"`
 	Goals   Goals    `json:"goals"`
 	Score   Score    `json:"score"`
-	
 }
 
-type PFixture struct {
+// FixturesAPIResponse is specifically for the fixtures endpoint
+type FixturesAPIResponse struct {
+	Response []FixtureMatch `json:"response"`
+}
+
+type FixtureMatch struct {
+	Fixture FixtureResponse `json:"fixture"`
+	Teams   Teams           `json:"teams"`
+	Goals   Goals           `json:"goals"`
+	Score   Score           `json:"score"`
+}
+
+type FixtureResponse struct {
 	ID        int    `json:"id"`
 	Date      string `json:"date"`
 	Timestamp int64  `json:"timestamp"`
 	Venue     Venue  `json:"venue"`
 	Status    Status `json:"status"`
-	Played 	  TeamStats `json:"played"`
-	Wins 	  TeamStats `json:"wins"`
-	Lose	  TeamStats	`json:"loses"`
-	Draws 	  TeamStats	`json:"draws"`
+}
 
+type PFixture struct {
+	ID        int       `json:"id"`
+	Date      string    `json:"date"`
+	Timestamp int64     `json:"timestamp"`
+	Venue     Venue     `json:"venue"`
+	Status    Status    `json:"status"`
+	Played    TeamStats `json:"played"`
+	Wins      TeamStats `json:"wins"`
+	Lose      TeamStats `json:"loses"`
+	Draws     TeamStats `json:"draws"`
 }
 
 type Venue struct {
@@ -82,14 +100,14 @@ type Venue struct {
 }
 
 type League struct {
-	ID   		int    				`json:"id"`
-	Name    	string 				`json:"name"`
-	Country 	string 				`json:"country"`
-	Round   	string 				`json:"round"`
-	Logo     	string      		`json:"logo"`
-	Flag     	string      		`json:"flag"`
-	Season   	int         		`json:"season"`
-	Standings 	[][] TeamStanding   `json:"standings"`
+	ID        int              `json:"id"`
+	Name      string           `json:"name"`
+	Country   string           `json:"country"`
+	Round     string           `json:"round"`
+	Logo      string           `json:"logo"`
+	Flag      string           `json:"flag"`
+	Season    int              `json:"season"`
+	Standings [][]TeamStanding `json:"standings,omitempty"`
 }
 
 type Teams struct {
@@ -201,89 +219,119 @@ type StandingAPIResponse struct {
 	Response []Response `json:"response"`
 }
 
-type Response struct{
+type Response struct {
 	League League `json:"league"`
 }
 
 type TeamStanding struct {
-    Rank          int          `json:"rank"`
-    Team          StandingTeam `json:"team"`
-    Points        int          `json:"points"`
-    GoalsDiff     int          `json:"goalsDiff"`
-    MatchesPlayed int          `json:"matchesPlayed"`
-    Wins          int          `json:"wins"`
-    Losses        int          `json:"losses"`
-    Draws         int          `json:"draws"`
-    All           MatchStats   `json:"all"`
+	Rank          int          `json:"rank"`
+	Team          StandingTeam `json:"team"`
+	Points        int          `json:"points"`
+	GoalsDiff     int          `json:"goalsDiff"`
+	MatchesPlayed int          `json:"matchesPlayed"`
+	Wins          int          `json:"wins"`
+	Losses        int          `json:"losses"`
+	Draws         int          `json:"draws"`
+	All           MatchStats   `json:"all"`
 }
 
 type StandingTeam struct {
-    ID   int    `json:"id"`
-    Name string `json:"name"`
-    Logo string `json:"logo"`
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Logo string `json:"logo"`
 }
 
 type MatchStats struct {
-    Played int       `json:"played"`
-    Win    int       `json:"win"`
-    Draw   int       `json:"draw"`
-    Lose   int       `json:"lose"`
-    Goals  GoalStats `json:"goals"`
+	Played int       `json:"played"`
+	Win    int       `json:"win"`
+	Draw   int       `json:"draw"`
+	Lose   int       `json:"lose"`
+	Goals  GoalStats `json:"goals"`
 }
 
 type GoalStats struct {
-    For     int `json:"for"`
-    Against int `json:"against"`
+	For     int `json:"for"`
+	Against int `json:"against"`
 }
 
 type Standing struct {
-    Rank          int    `json:"rank"`
-    TeamName      string `json:"teamName"`
-    TeamLogo      string `json:"teamLogo"`
-    Points        int    `json:"points"`
-    MatchesPlayed int    `json:"matchesPlayed"`
-    Wins          int    `json:"wins"`
-    Losses        int    `json:"losses"`
-    Draws         int    `json:"draws"`
-    GoalsDiff     int    `json:"goalsDiff"`
+	Rank          int    `json:"rank"`
+	TeamName      string `json:"teamName"`
+	TeamLogo      string `json:"teamLogo"`
+	Points        int    `json:"points"`
+	MatchesPlayed int    `json:"matchesPlayed"`
+	Wins          int    `json:"wins"`
+	Losses        int    `json:"losses"`
+	Draws         int    `json:"draws"`
+	GoalsDiff     int    `json:"goalsDiff"`
 }
 
 type StandingsResponse struct {
-    LeagueID    int        `json:"leagueId"`
-    LeagueName  string     `json:"leagueName"`
-    Country     string     `json:"country"`
-    CountryFlag string     `json:"countryFlag"`
-    Season      int        `json:"season"`
-    Standings   []Standing `json:"standings"`
-    LastUpdated string     `json:"lastUpdated"`
+	LeagueID    int        `json:"leagueId"`
+	LeagueName  string     `json:"leagueName"`
+	Country     string     `json:"country"`
+	CountryFlag string     `json:"countryFlag"`
+	Season      int        `json:"season"`
+	Standings   []Standing `json:"standings"`
+	LastUpdated string     `json:"lastUpdated"`
 }
 
 type StatAPIResponse struct {
-	Response  Stats `json:"response"`
+	Get        string            `json:"get"`
+	Parameters map[string]string `json:"parameters"`
+	Errors     []string          `json:"errors"`
+	Results    int               `json:"results"`
+	Paging     Paging            `json:"paging"`
+	Response   StatResponse      `json:"response"`
 }
 
-type Stats struct {
-	League League 	`json:"league"`
-	Team   MTeam	`json:"team"`
-	Fixture PFixture `json:"fixture"`
-	Goals   GoalStat    `json:"goals"`
+type Paging struct {
+	Current int `json:"current"`
+	Total   int `json:"total"`
+}
+
+type StatResponse struct {
+	League   League    `json:"league"`
+	Team     MTeam     `json:"team"`
+	Form     string    `json:"form"`
+	Fixtures Fixtures  `json:"fixtures"`
+	Goals    GoalsStat `json:"goals"`
+}
+
+type Fixtures struct {
+	Played TeamStats `json:"played"`
+	Wins   TeamStats `json:"wins"`
+	Draws  TeamStats `json:"draws"`
+	Loses  TeamStats `json:"loses"`
+}
+
+type GoalsStat struct {
+	For     GoalsForAgainst `json:"for"`
+	Against GoalsForAgainst `json:"against"`
+}
+
+type GoalsForAgainst struct {
+	Total GoalsTotal `json:"total"`
+}
+
+type GoalsTotal struct {
+	Home  int `json:"home"`
+	Away  int `json:"away"`
+	Total int `json:"total"`
+}
+
+type Wins struct {
+	Home string `json:"home"`
+	Away string `json:"away"`
+}
+
+type Loses struct {
+	Home string `json:"home"`
+	Away string `json:"away"`
 }
 
 type TeamStats struct {
-	Home 	int `json:"home"`
-	Away 	int `json:"away"`
-	Total 	int `json:"total"`
+	Home  int `json:"home"`
+	Away  int `json:"away"`
+	Total int `json:"total"`
 }
-
-type GoalStat struct {
-	For Total `json:"for"`
-	Against Total `json:"against"`
-}
-
-type Total struct{
-	Total TeamStats `json:"total"`
-}
-
-
-
-

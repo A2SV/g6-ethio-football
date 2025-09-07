@@ -10,7 +10,6 @@ import (
 	domain "github.com/abrshodin/ethio-fb-backend/Domain"
 )
 
-
 func NewAPIService() domain.IAPIService {
 	return &APIServiceClient{}
 }
@@ -96,9 +95,9 @@ func (ac *APIServiceClient) LiveFixtures(league string) (*[]domain.PrevFixtures,
 
 	ids := ""
 	if league == "ETH" {
-		ids = "363-363"
+		ids = "363"
 	} else {
-		ids = "39-39"
+		ids = "39"
 	}
 
 	API_KEY := os.Getenv("API_SPORTS_API_KEY")
@@ -141,7 +140,6 @@ func (ac *APIServiceClient) LiveFixtures(league string) (*[]domain.PrevFixtures,
 
 	var prevFixtures = &[]domain.PrevFixtures{}
 
-	
 	for _, r := range apiResponse.Response {
 
 		fixture := domain.PrevFixtures{
@@ -170,7 +168,7 @@ func (ac *APIServiceClient) LiveFixtures(league string) (*[]domain.PrevFixtures,
 				Extratime: domain.Goals(r.Score.Extratime),
 				Penalty:   domain.Goals(r.Score.Penalty),
 			},
-			
+
 			Status: r.Fixture.Status,
 		}
 
@@ -181,7 +179,7 @@ func (ac *APIServiceClient) LiveFixtures(league string) (*[]domain.PrevFixtures,
 
 }
 
-func (ac *APIServiceClient) Statistics(league, season, team int) (*domain.TeamComparison, error){
+func (ac *APIServiceClient) Statistics(league, season, team int) (*domain.TeamComparison, error) {
 
 	API_KEY := os.Getenv("API_SPORTS_API_KEY")
 
@@ -217,23 +215,21 @@ func (ac *APIServiceClient) Statistics(league, season, team int) (*domain.TeamCo
 		return nil, domain.ErrInternalServer
 	}
 
-
 	// Ensure response is not empty
 	if apiResponse.Response.Team.Name == "" {
 		return nil, nil
 	}
 
 	teamData := &domain.TeamComparison{
-		Name: apiResponse.Response.Team.Name,
-		MatchesPlayed: apiResponse.Response.Fixture.Played.Total,
-		Wins: apiResponse.Response.Fixture.Wins.Total,
-		Draws: apiResponse.Response.Fixture.Draws.Total,
-		Losses: apiResponse.Response.Fixture.Lose.Total,
-		GoalsFor: apiResponse.Response.Goals.For.Total.Total,
-		GoalsAgainst: apiResponse.Response.Goals.Against.Total.Total,
+		Name:          apiResponse.Response.Team.Name,
+		MatchesPlayed: apiResponse.Response.Fixtures.Played.Total,
+		Wins:          apiResponse.Response.Fixtures.Wins.Total,
+		Draws:         apiResponse.Response.Fixtures.Draws.Total,
+		Losses:        apiResponse.Response.Fixtures.Loses.Total,
+		GoalsFor:      apiResponse.Response.Goals.For.Total.Total,
+		GoalsAgainst:  apiResponse.Response.Goals.Against.Total.Total,
 	}
 
-
-return teamData, nil
+	fmt.Println("teamData : ", teamData)
+	return teamData, nil
 }
-
