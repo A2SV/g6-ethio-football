@@ -27,6 +27,7 @@ func (c *AIAnswerComposer) composeMarkdown(dCtx domain.AnswerContext) (*domain.A
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(c.apiKey))
 	if err != nil {
+		fmt.Print("err :", err)
 		return nil, domain.ErrUnexpected
 	}
 	defer client.Close()
@@ -34,10 +35,10 @@ func (c *AIAnswerComposer) composeMarkdown(dCtx domain.AnswerContext) (*domain.A
 	model := client.GenerativeModel("gemini-1.5-flash-latest")
 	contextBytes, _ := json.MarshalIndent(dCtx.ContextData, "", "  ")
 
-	language := "English"
-	if dCtx.Language == "am" {
-		language = "Amharic"
-	}
+	// language := "English"
+	// if dCtx.Language == "am" {
+	// 	language = "Amharic"
+	// }
 
 	prompt := fmt.Sprintf(`You are a helpful and concise football assistant for Ethiopian fans.
 	Your task is to write a short, friendly summary in %s using ONLY the data provided below.
@@ -53,10 +54,11 @@ func (c *AIAnswerComposer) composeMarkdown(dCtx domain.AnswerContext) (*domain.A
 	**Provided Data (JSON format):**
 	%s
 
-	Now, write the summary:`, language, string(contextBytes))
+	Now, write the summary:`, dCtx.Language, string(contextBytes))
 
 	resp, err := model.GenerateContent(ctx, genai.Text(prompt))
 	if err != nil {
+		fmt.Println("err : ", err)
 		return nil, domain.ErrUnexpected
 	}
 
@@ -68,6 +70,7 @@ func (c *AIAnswerComposer) composeMarkdown(dCtx domain.AnswerContext) (*domain.A
 		}
 	}
 	if markdownContent == "" {
+		fmt.Println("err : ", err)
 		return nil, domain.ErrUnexpected
 	}
 

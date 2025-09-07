@@ -148,7 +148,9 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 			TeamA: team1Data,
 			TeamB: team2Data,
 		}
-
+	case "fact":
+		data = intent.Teams
+			
 	default:
 		c.JSON(http.StatusBadRequest, gin.H{"error": "unsupported topic"})
 		return
@@ -172,7 +174,6 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 
 	c.JSON(http.StatusOK, answer)
 }
-
 
 func (h *IntentController) HandleCompare(c *gin.Context){
 

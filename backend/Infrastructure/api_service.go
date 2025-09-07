@@ -264,8 +264,6 @@ func (ac *APIServiceClient) GetTeams(leagueID, season int) (*domain.TeamsAPIResp
 		return nil, domain.ErrInternalServer
 	}
 
-	fmt.Println(string(body))
-
 	var apiResponse domain.TeamsAPIResponse
 	if err := json.Unmarshal(body, &apiResponse); err != nil {
 		return nil, domain.ErrInternalServer

@@ -65,8 +65,10 @@ func (ip AIIntentParser) Parse(text string) (*domain.Intent, error) {
 			Amharic or explicitly wants to interact in Amharic, all responses, including headings 
 			and match details, should be in Amharic. Include a field in the response 'language': 
 			'amharic'. If the user writes in English or wants English responses, respond in English 
-			and set language": "english.Auto-detect language preference from the user prompt and adjust 
-			accordingly. the name of the team you insert to intent should be in one of the following  
+			and set language": "english. Auto-detect language preference from the user prompt and if 
+			the langaue is amaharic change translate the language into english for the intent but the 
+			language field should not be changed since will need it for answer. the name of the team 
+			you insert to intent should be in one of the following.  
 
 			teams for ethiopian premier league: Here's the list of team names:[ 
 						"Adama Kenema",
