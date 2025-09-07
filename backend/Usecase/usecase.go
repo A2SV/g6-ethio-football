@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 
 	// "log"
 
@@ -15,6 +16,8 @@ type TeamUsecases interface {
 	GetTeam(ctx context.Context, teamId string) (*domain.Team, error)
 	AddTeam(ctx context.Context, team *domain.Team) error
 	Statistics(ctx context.Context, league, season int, team string) (*domain.TeamComparison, error)
+	GetTeamByID(ctx context.Context, teamID int) (*domain.Team, error)
+	FetchAndCacheTeams(ctx context.Context, leagueID, season int) error
 }
 
 func NewTeamUsecase(repo domain.IRedisRepo, api domain.IAPIService) TeamUsecases {
@@ -23,7 +26,7 @@ func NewTeamUsecase(repo domain.IRedisRepo, api domain.IAPIService) TeamUsecases
 
 type TeamUsecase struct {
 	teamRepo domain.IRedisRepo
-	api domain.IAPIService
+	api      domain.IAPIService
 }
 
 func (tu *TeamUsecase) GetTeam(ctx context.Context, teamId string) (*domain.Team, error) {
@@ -34,7 +37,7 @@ func (tu *TeamUsecase) AddTeam(ctx context.Context, team *domain.Team) error {
 	return tu.teamRepo.Add(ctx, team)
 }
 
-func (tu *TeamUsecase) Statistics(ctx context.Context, league, season int, team string) (*domain.TeamComparison, error){
+func (tu *TeamUsecase) Statistics(ctx context.Context, league, season int, team string) (*domain.TeamComparison, error) {
 
 	teamID, err := tu.teamRepo.GetID(ctx, team)
 	if err != nil {
@@ -45,6 +48,98 @@ func (tu *TeamUsecase) Statistics(ctx context.Context, league, season int, team 
 	fmt.Println("api called")
 
 	return tu.api.Statistics(league, season, teamID)
+}
+
+func (tu *TeamUsecase) GetTeamByID(ctx context.Context, teamID int) (*domain.Team, error) {
+	// First try to get from cache
+	team, err := tu.teamRepo.GetTeamByID(ctx, teamID)
+	if err == nil {
+		return team, nil
+	}
+
+	// If not in cache, try to fetch from API and cache it
+	// We need to determine which league this team belongs to
+	// Try both leagues and all three seasons
+	leagues := []int{363, 39} // ETH and EPL
+	seasons := []int{2021, 2022, 2023}
+
+	for _, leagueID := range leagues {
+		for _, season := range seasons {
+			teamsResp, err := tu.api.GetTeams(leagueID, season)
+			if err != nil {
+				continue
+			}
+
+			// Convert API response to domain teams and cache them
+			var teams []domain.Team
+			for _, teamResp := range teamsResp.Response {
+				team := domain.Team{
+					ID:       strconv.Itoa(teamResp.Team.ID),
+					Name:     teamResp.Team.Name,
+					Short:    "",
+					League:   getLeagueName(leagueID),
+					CrestURL: teamResp.Team.Logo,
+					Bio:      fmt.Sprintf("Founded: %d, Country: %s", getFoundedYear(teamResp.Team.Founded), teamResp.Team.Country),
+				}
+				teams = append(teams, team)
+			}
+
+			// Cache all teams
+			tu.teamRepo.SaveAllTeams(ctx, leagueID, season, teams)
+
+			// Check if our team is in this league/season combination
+			for _, team := range teams {
+				if team.ID == strconv.Itoa(teamID) {
+					return &team, nil
+				}
+			}
+		}
+	}
+
+	return nil, domain.ErrTeamNotFound
+}
+
+func (tu *TeamUsecase) FetchAndCacheTeams(ctx context.Context, leagueID, season int) error {
+	teamsResp, err := tu.api.GetTeams(leagueID, season)
+	if err != nil {
+		return err
+	}
+
+	// Convert API response to domain teams
+	var teams []domain.Team
+	for _, teamResp := range teamsResp.Response {
+		team := domain.Team{
+			ID:       strconv.Itoa(teamResp.Team.ID),
+			Name:     teamResp.Team.Name,
+			Short:    "",
+			League:   getLeagueName(leagueID),
+			CrestURL: teamResp.Team.Logo,
+			Bio:      fmt.Sprintf("Founded: %d, Country: %s", getFoundedYear(teamResp.Team.Founded), teamResp.Team.Country),
+		}
+		teams = append(teams, team)
+	}
+
+	// Cache all teams
+	return tu.teamRepo.SaveAllTeams(ctx, leagueID, season, teams)
+}
+
+// Helper functions
+func getLeagueName(leagueID int) string {
+	switch leagueID {
+	case 363:
+		return "Ethiopian Premier League"
+	case 39:
+		return "English Premier League"
+	default:
+		return "Unknown League"
+	}
+}
+
+func getFoundedYear(founded *int) int {
+	if founded != nil {
+		return *founded
+	}
+	return 0
 }
 
 type FixtureUsecase interface {
@@ -102,13 +197,12 @@ func (uc *fixtureUsecase) GetFixtures(ctx context.Context, league, team, season,
 	if err != nil {
 		return nil, err
 	}
-	
+
 	if fixtures == nil {
 		return []domain.Fixture{}, nil
 	}
 	return fixtures, nil
 }
-
 
 type AnswerUsecase interface {
 	Compose(ctx context.Context, context domain.AnswerContext) (*domain.Answer, error)

@@ -21,19 +21,17 @@ type teamRepo struct {
 }
 
 func (tr *teamRepo) Get(ctx context.Context, teamId string) (*domain.Team, error) {
-
-	key := "team" + teamId
+	key := "team:" + teamId
 	vals, err := tr.rdb.HGetAll(ctx, key).Result()
 	if err != nil {
 		return nil, domain.ErrInternalServer
 	}
-
 	if len(vals) == 0 {
 		return nil, domain.ErrTeamNotFound
 	}
 
 	team := &domain.Team{
-		ID:       vals["id"],
+		ID:       vals["ID"],
 		Name:     vals["name"],
 		Short:    vals["short"],
 		League:   vals["league"],
@@ -62,6 +60,64 @@ func (tr *teamRepo) Add(ctx context.Context, team *domain.Team) error {
 		"crest_url": team.CrestURL,
 		"bio":       team.Bio,
 	}).Err()
+	if err != nil {
+		return domain.ErrInternalServer
+	}
+
+	tr.rdb.Expire(ctx, key, 7*24*time.Hour)
+
+	return nil
+}
+
+func (tr *teamRepo) GetID(ctx context.Context, team string) (int, error) {
+	val, err := tr.rdb.Get(ctx, team).Result()
+	if err != nil {
+		if err == redis.Nil {
+			return 0, domain.ErrTeamNotFound
+		}
+		return 0, domain.ErrInternalServer
+	}
+
+	id, err := strconv.Atoi(val)
+	if err != nil {
+		return 0, domain.ErrInternalServer
+	}
+	return id, nil
+}
+
+func (tr *teamRepo) GetTeamByID(ctx context.Context, teamID int) (*domain.Team, error) {
+	key := fmt.Sprintf("team:%d", teamID)
+	vals, err := tr.rdb.HGetAll(ctx, key).Result()
+	if err != nil {
+		return nil, domain.ErrInternalServer
+	}
+
+	if len(vals) == 0 {
+		return nil, domain.ErrTeamNotFound
+	}
+
+	team := &domain.Team{
+		ID:       vals["id"],
+		Name:     vals["name"],
+		Short:    vals["short"],
+		League:   vals["league"],
+		CrestURL: vals["crest_url"],
+		Bio:      vals["bio"],
+	}
+	return team, nil
+}
+
+func (tr *teamRepo) SaveTeamByID(ctx context.Context, teamID int, team *domain.Team) error {
+	key := fmt.Sprintf("team:%d", teamID)
+
+	err := tr.rdb.HSet(ctx, key, map[string]interface{}{
+		"id":        team.ID,
+		"name":      team.Name,
+		"short":     team.Short,
+		"league":    team.League,
+		"crest_url": team.CrestURL,
+		"bio":       team.Bio,
+	}).Err()
 
 	if err != nil {
 		return domain.ErrInternalServer
@@ -70,19 +126,59 @@ func (tr *teamRepo) Add(ctx context.Context, team *domain.Team) error {
 	return nil
 }
 
-func (tr *teamRepo) GetID(ctx context.Context, team string) (int, error) {
-
-	val, err := tr.rdb.Get(ctx, team).Result()
+func (tr *teamRepo) GetAllTeams(ctx context.Context, leagueID, season int) ([]domain.Team, error) {
+	key := fmt.Sprintf("teams:%d:%d", leagueID, season)
+	raw, err := tr.rdb.Get(ctx, key).Bytes()
 	if err != nil {
-		return 0, domain.ErrTeamNotFound
+		if err == redis.Nil {
+			return nil, domain.ErrTeamNotFound
+		}
+		return nil, domain.ErrInternalServer
 	}
 
-	id, err := strconv.Atoi(val)
-	if err != nil {
-		return 0, domain.ErrInternalServer
+	var teams []domain.Team
+	if err := json.Unmarshal(raw, &teams); err != nil {
+		return nil, domain.ErrInternalServer
 	}
 
-	return id, nil
+	return teams, nil
+}
+
+func (tr *teamRepo) SaveAllTeams(ctx context.Context, leagueID, season int, teams []domain.Team) error {
+	key := fmt.Sprintf("teams:%d:%d", leagueID, season)
+
+	payload, err := json.Marshal(teams)
+	if err != nil {
+		return domain.ErrInternalServer
+	}
+
+	if err := tr.rdb.Set(ctx, key, payload, 0).Err(); err != nil {
+		return domain.ErrInternalServer
+	}
+
+	// Also save individual teams with teamid:team format
+	for _, team := range teams {
+		teamID, err := strconv.Atoi(team.ID)
+		if err != nil {
+			continue // Skip invalid team IDs
+		}
+
+		teamKey := fmt.Sprintf("team:%d", teamID)
+		err = tr.rdb.HSet(ctx, teamKey, map[string]interface{}{
+			"id":        team.ID,
+			"name":      team.Name,
+			"short":     team.Short,
+			"league":    team.League,
+			"crest_url": team.CrestURL,
+			"bio":       team.Bio,
+		}).Err()
+
+		if err != nil {
+			fmt.Printf("Failed to save individual team %d: %v\n", teamID, err)
+		}
+	}
+
+	return nil
 }
 
 // FixtureRepo abstracts fixture fetching

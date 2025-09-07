@@ -7,7 +7,11 @@ import (
 type IRedisRepo interface {
 	Get(ctx context.Context, teamId string) (*Team, error)
 	Add(ctx context.Context, team *Team) error
-	GetID(ctx context.Context, leagueID string) (int, error) 
+	GetID(ctx context.Context, leagueID string) (int, error)
+	GetTeamByID(ctx context.Context, teamID int) (*Team, error)
+	SaveTeamByID(ctx context.Context, teamID int, team *Team) error
+	GetAllTeams(ctx context.Context, leagueID, season int) ([]Team, error)
+	SaveAllTeams(ctx context.Context, leagueID, season int, teams []Team) error
 }
 
 type IStandingsRepo interface {
@@ -20,4 +24,5 @@ type IAPIService interface {
 	PrevFixtures(leagueID int, season int, fromDate, toDate string) (*[]PrevFixtures, error)
 	LiveFixtures(league string) (*[]PrevFixtures, error)
 	Statistics(league, season, team int) (*TeamComparison, error)
+	GetTeams(leagueID, season int) (*TeamsAPIResponse, error)
 }

@@ -33,7 +33,7 @@ type Answer struct {
 }
 
 type AnswerContext struct {
-	Topic       string // "compare", "fixture", "table", etc.
+	Topic       string 
 	Language    string
 	Source      string
 	Freshness   time.Time

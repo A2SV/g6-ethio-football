@@ -44,7 +44,7 @@ func NewRouter(fixtureUC usecase.FixtureUsecase, newsUC *usecase.NewsUseCase) *g
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		if fixtures == nil {
 			fixtures = []domain.Fixture{}
 		}
@@ -76,6 +76,7 @@ func RegisterTeamRoutes(r *gin.Engine, handler *controller.TeamController) {
 	{
 		team.GET("/:id/bio", handler.GetTeam)
 		team.POST("/create", handler.AddTeam)
+		team.POST("/cache", handler.CacheTeams)
 	}
 }
 

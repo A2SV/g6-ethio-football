@@ -8,7 +8,6 @@ type Team struct {
 	League   string `json:"league"`
 	CrestURL string `json:"crest_url"`
 	Bio      string `json:"bio"`
-	Fixtures []Fixture
 }
 
 // Fixture represents a scheduled or completed match
@@ -17,8 +16,8 @@ type Fixture struct {
 	ID          string `json:"id"`
 	League      string `json:"league"`
 	DateUTC     string `json:"date_utc"` // ISO string
-	HomeName      string `json:"home_name"`
-	AwayName      string `json:"away_name"`
+	HomeName    string `json:"home_name"`
+	AwayName    string `json:"away_name"`
 	Status      string `json:"status"`
 	Score       string `json:"score"`
 	HomeLogo    string `json:"home_logo,omitempty"`
@@ -80,6 +79,41 @@ type FixtureResponse struct {
 	Timestamp int64  `json:"timestamp"`
 	Venue     Venue  `json:"venue"`
 	Status    Status `json:"status"`
+}
+
+// TeamsAPIResponse is specifically for the teams endpoint
+type TeamsAPIResponse struct {
+	Get        string            `json:"get"`
+	Parameters map[string]string `json:"parameters"`
+	Errors     []string          `json:"errors"`
+	Results    int               `json:"results"`
+	Paging     Paging            `json:"paging"`
+	Response   []TeamResponse    `json:"response"`
+}
+
+type TeamResponse struct {
+	Team  TeamInfo  `json:"team"`
+	Venue VenueInfo `json:"venue"`
+}
+
+type TeamInfo struct {
+	ID       int     `json:"id"`
+	Name     string  `json:"name"`
+	Code     *string `json:"code"`
+	Country  string  `json:"country"`
+	Founded  *int    `json:"founded"`
+	National bool    `json:"national"`
+	Logo     string  `json:"logo"`
+}
+
+type VenueInfo struct {
+	ID       int     `json:"id"`
+	Name     string  `json:"name"`
+	Address  *string `json:"address"`
+	City     string  `json:"city"`
+	Capacity int     `json:"capacity"`
+	Surface  string  `json:"surface"`
+	Image    string  `json:"image"`
 }
 
 type PFixture struct {
