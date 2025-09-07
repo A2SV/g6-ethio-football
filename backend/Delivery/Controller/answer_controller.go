@@ -50,3 +50,4 @@ func (c *AnswerController) HandlePostAnswer(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, answer)
 }
+

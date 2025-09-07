@@ -20,6 +20,10 @@ type teamRepo struct {
 	rdb *redis.Client
 }
 
+func(tr *teamRepo) CacheTeamID(ctx context.Context, teamName string, teamID string) error{
+	return tr.rdb.Set(ctx, teamName, teamID, 0).Err()	
+}
+
 func (tr *teamRepo) Get(ctx context.Context, teamId string) (*domain.Team, error) {
 	key := "team:" + teamId
 	vals, err := tr.rdb.HGetAll(ctx, key).Result()
@@ -178,6 +182,35 @@ func (tr *teamRepo) SaveAllTeams(ctx context.Context, leagueID, season int, team
 		}
 	}
 
+	return nil
+}
+
+// Team statistics cache helpers
+func (tr *teamRepo) GetTeamStats(ctx context.Context, teamID int) (*domain.TeamComparison, error) {
+	key := fmt.Sprintf("teamstats:%d", teamID)
+	raw, err := tr.rdb.Get(ctx, key).Bytes()
+	if err != nil {
+		if err == redis.Nil {
+			return nil, domain.ErrTeamNotFound
+		}
+		return nil, domain.ErrInternalServer
+	}
+	var stats domain.TeamComparison
+	if err := json.Unmarshal(raw, &stats); err != nil {
+		return nil, domain.ErrInternalServer
+	}
+	return &stats, nil
+}
+
+func (tr *teamRepo) SaveTeamStats(ctx context.Context, teamID int, stats *domain.TeamComparison) error {
+	key := fmt.Sprintf("teamstats:%d", teamID)
+	b, err := json.Marshal(stats)
+	if err != nil {
+		return domain.ErrInternalServer
+	}
+	if err := tr.rdb.Set(ctx, key, b, 6*time.Hour).Err(); err != nil {
+		return domain.ErrInternalServer
+	}
 	return nil
 }
 

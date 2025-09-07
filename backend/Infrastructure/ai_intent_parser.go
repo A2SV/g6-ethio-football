@@ -66,7 +66,60 @@ func (ip AIIntentParser) Parse(text string) (*domain.Intent, error) {
 			and match details, should be in Amharic. Include a field in the response 'language': 
 			'amharic'. If the user writes in English or wants English responses, respond in English 
 			and set language": "english.Auto-detect language preference from the user prompt and adjust 
-			accordingly.` + "\n\nuser prompt" + text,
+			accordingly. the name of the team you insert to intent should be in one of the following  
+
+			teams for ethiopian premier league: Here's the list of team names:[ 
+						"Adama Kenema",
+						"Awassa Kenema",
+						"Bahardar",
+						"Dire Dawa Kenema",
+						"Ethiopia Bunna",
+						"Fasil Ketema",
+						"Kedus Giorgis",
+						"Mekelakeya",
+						"Sidama Bunna",
+						"Welayta Dicha",
+						"Arba Minch Kenema",
+						"Addis Ababa Ketema",
+						"Hadiya Hosaena",
+						"Jimma Aba Jifar",
+						"Sebeta Kenema",
+						"Wolkite Ketema",
+						"Mebrat Hayl",
+						"Ethiopian Medhin",
+						"Legetafo Legedadi",
+						"Ethiopia Nigd Bank",
+						"Hambericho Durame",
+						"Shashemene Kenema"
+					]
+
+		teams for english premierleague: [
+							"Manchester United",
+							"Newcastle",
+							"Bournemouth",
+							"Fulham",
+							"Wolves",
+							"Liverpool",
+							"Southampton",
+							"Arsenal",
+							"Everton",
+							"Leicester",
+							"Tottenham",
+							"West Ham",
+							"Chelsea",
+							"Manchester City",
+							"Brighton",
+							"Crystal Palace",
+							"Brentford",
+							"Leeds",
+							"Nottingham Forest",
+							"Aston Villa",
+							"Watford",
+							"Burnley",
+							"Norwich",
+							"Sheffield Utd",
+							"Luton"
+					]` + "\n\nuser prompt" + text,
 		),
 		config,
 	)

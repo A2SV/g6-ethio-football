@@ -16,6 +16,7 @@ type TeamUsecases interface {
 	GetTeam(ctx context.Context, teamId string) (*domain.Team, error)
 	AddTeam(ctx context.Context, team *domain.Team) error
 	Statistics(ctx context.Context, league, season int, team string) (*domain.TeamComparison, error)
+	StatisticsByID(ctx context.Context, league, season, team int) (*domain.TeamComparison, error)
 	GetTeamByID(ctx context.Context, teamID int) (*domain.Team, error)
 	FetchAndCacheTeams(ctx context.Context, leagueID, season int) error
 }
@@ -45,21 +46,44 @@ func (tu *TeamUsecase) Statistics(ctx context.Context, league, season int, team 
 		return nil, domain.ErrInternalServer
 	}
 
-	fmt.Println("api called")
+	if stats, err := tu.teamRepo.GetTeamStats(ctx, teamID); err == nil && stats != nil {
+		return stats, nil
+	}
 
-	return tu.api.Statistics(league, season, teamID)
+	stats, err := tu.api.Statistics(league, season, teamID)
+	if err != nil {
+		return nil, err
+	}
+	
+	_ = tu.teamRepo.SaveTeamStats(ctx, teamID, stats)
+
+	return stats, nil
+}
+
+
+
+func( tu *TeamUsecase) StatisticsByID(ctx context.Context, league, season, team int) (*domain.TeamComparison, error){
+
+	if stats, err := tu.teamRepo.GetTeamStats(ctx, team); err == nil && stats != nil {
+		return stats, nil
+	}
+
+	stats, err := tu.api.Statistics(league, season, team)
+	if err != nil {
+		return nil, err
+	}
+
+	_ = tu.teamRepo.SaveTeamStats(ctx, team, stats)
+
+	return stats, nil
+
 }
 
 func (tu *TeamUsecase) GetTeamByID(ctx context.Context, teamID int) (*domain.Team, error) {
-	// First try to get from cache
 	team, err := tu.teamRepo.GetTeamByID(ctx, teamID)
 	if err == nil {
 		return team, nil
 	}
-
-	// If not in cache, try to fetch from API and cache it
-	// We need to determine which league this team belongs to
-	// Try both leagues and all three seasons
 	leagues := []int{363, 39} // ETH and EPL
 	seasons := []int{2021, 2022, 2023}
 
@@ -117,11 +141,15 @@ func (tu *TeamUsecase) FetchAndCacheTeams(ctx context.Context, leagueID, season 
 			Bio:      fmt.Sprintf("Founded: %d, Country: %s", getFoundedYear(teamResp.Team.Founded), teamResp.Team.Country),
 		}
 		teams = append(teams, team)
+		fmt.Print("name:", team.Name)
+		fmt.Print("ID:", team.ID)
+		tu.teamRepo.CacheTeamID(ctx, team.Name, team.ID)
 	}
 
 	// Cache all teams
 	return tu.teamRepo.SaveAllTeams(ctx, leagueID, season, teams)
 }
+
 
 // Helper functions
 func getLeagueName(leagueID int) string {
@@ -157,36 +185,6 @@ func NewFixtureUsecase(r repository.FixtureRepo, c repository.FixtureRepo) Fixtu
 		cache: c,
 	}
 }
-
-// func (uc *fixtureUsecase) GetFixtures(ctx context.Context, league, team, season, from, to string) ([]domain.Fixture, error) {
-// 	if league == "" {
-// 		return nil, errors.New("league is required")
-// 	}
-
-// 	// Try cache first
-// 	fixtures, err := uc.cache.GetFixtures(league, team, season, from, to)
-// 	if err == nil && len(fixtures) > 0 {
-// 		return fixtures, nil
-// 	}
-
-// 	if err != nil {
-// 		log.Printf("cache miss or error fetching fixtures (league=%s, team=%s, from=%s, to=%s): %v", league, team, from, to, err)
-// 	}
-
-// 	// Fallback to API repo
-// 	fixtures, err = uc.repo.GetFixtures(league, team, season, from, to)
-// 	if err != nil {
-// 		log.Printf("API fetch failed (league=%s, team=%s, from=%s, to=%s): %v", league, team, from, to, err)
-// 		return nil, err
-// 	}
-
-// 	if apiRepo, ok := uc.cache.(*repository.APIRepo); ok && apiRepo.RDB != nil {
-// 		if err := apiRepo.SetFixturesCache(league, team, season, from, to, fixtures); err != nil {
-// 			log.Printf("failed to cache fixtures: %v", err)
-// 		}
-// 	}
-// 	return fixtures, nil
-// }
 
 func (uc *fixtureUsecase) GetFixtures(ctx context.Context, league, team, season, from, to string) ([]domain.Fixture, error) {
 	if league == "" {

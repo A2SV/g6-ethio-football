@@ -62,15 +62,12 @@ func main() {
 														newsHandler,
 														teamHandler,
 														answerController,
-														fixtureUC,
+														prevUC,
 													)
 	
 
 	// Router
 	router := routers.NewRouter(fixtureUC, newsUC)
-
-
-
 	routers.RegisterTeamRoutes(router, teamHandler)
 	routers.RegisterAPISercice(router, historyHandler)
 	routers.RegisterStandingsRoutes(router, standingsHandler)

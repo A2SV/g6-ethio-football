@@ -12,6 +12,9 @@ type IRedisRepo interface {
 	SaveTeamByID(ctx context.Context, teamID int, team *Team) error
 	GetAllTeams(ctx context.Context, leagueID, season int) ([]Team, error)
 	SaveAllTeams(ctx context.Context, leagueID, season int, teams []Team) error
+	GetTeamStats(ctx context.Context, teamID int) (*TeamComparison, error)
+	SaveTeamStats(ctx context.Context, teamID int, stats *TeamComparison) error
+	CacheTeamID(ctx context.Context, teamName string, teamID string) error
 }
 
 type IStandingsRepo interface {

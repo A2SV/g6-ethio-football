@@ -80,6 +80,7 @@ func RegisterRoute(router *gin.Engine, handler *controller.IntentController, ans
 
 	router.POST("/intent/parse", handler.ParseIntent)
 	router.POST("/answer", answerHandler.HandlePostAnswer)
+	router.POST("/compare/teams", handler.HandleCompare)
 }
 
 func RegisterTeamRoutes(r *gin.Engine, handler *controller.TeamController) {
