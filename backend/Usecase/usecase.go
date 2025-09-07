@@ -193,14 +193,35 @@ func (uc *fixtureUsecase) GetFixtures(ctx context.Context, league, team, season,
 		return nil, errors.New("league is required")
 	}
 
-	fixtures, err := uc.repo.GetFixtures(league, team, season, from, to)
+	// Try cache first
+	fixtures, err := uc.cache.GetFixtures(league, team, season, from, to)
+	if err == nil && len(fixtures) > 0 {
+		fmt.Printf("Cache hit for fixtures (league=%s, team=%s, season=%s, from=%s, to=%s)\n", league, team, season, from, to)
+		return fixtures, nil
+	}
+
+	fmt.Printf("Cache miss for fixtures (league=%s, team=%s, season=%s, from=%s, to=%s), fetching from API\n", league, team, season, from, to)
+
+	// Fallback to API repo
+	fixtures, err = uc.repo.GetFixtures(league, team, season, from, to)
 	if err != nil {
+		fmt.Printf("API fetch failed (league=%s, team=%s, season=%s, from=%s, to=%s): %v\n", league, team, season, from, to, err)
 		return nil, err
 	}
 
 	if fixtures == nil {
 		return []domain.Fixture{}, nil
 	}
+
+	// Cache the results for future requests
+	if apiRepo, ok := uc.cache.(*repository.APIRepo); ok && apiRepo.RDB != nil {
+		if err := apiRepo.SetFixturesCache(league, team, season, from, to, fixtures); err != nil {
+			fmt.Printf("Failed to cache fixtures: %v\n", err)
+		} else {
+			fmt.Printf("Successfully cached fixtures for (league=%s, team=%s, season=%s, from=%s, to=%s)\n", league, team, season, from, to)
+		}
+	}
+
 	return fixtures, nil
 }
 

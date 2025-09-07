@@ -3,6 +3,7 @@ module github.com/abrshodin/ethio-fb-backend
 go 1.24.0
 
 require (
+	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-gonic/gin v1.10.1
 	github.com/joho/godotenv v1.5.1
 	github.com/redis/go-redis/v9 v9.12.1

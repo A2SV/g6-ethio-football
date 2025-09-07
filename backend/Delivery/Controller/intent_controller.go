@@ -74,7 +74,7 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 	case "ETH":
 		leagueID = 363
 	case "EPL":
-		leagueID = 46
+		leagueID = 39
 	}
 
 	switch intent.Topic {
@@ -88,6 +88,7 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 		data, err = h.fixtureUC.GetFixtures(ctx, intent.League, "4116", "2022", "2022-08-01", "2022-10-10")
 		fmt.Println("data :", data)
 		if err != nil {
+			
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "err while fetching data for teams fixtire"})
 			return
 		}
@@ -96,6 +97,7 @@ func (h *IntentController) ParseIntent(c *gin.Context) {
 		data, err = h.standingUC.standingsUsecase.GetStandings(ctx, leagueID, season)
 		fmt.Println("data :", data)
 		if err != nil {
+			fmt.Println("err :", err)
 			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Error while fetching standings"})
 			return
 		}

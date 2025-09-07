@@ -8,6 +8,7 @@ import (
 	infrastructure "github.com/abrshodin/ethio-fb-backend/Infrastructure"
 	repository "github.com/abrshodin/ethio-fb-backend/Repository"
 	usecase "github.com/abrshodin/ethio-fb-backend/Usecase"
+	"github.com/gin-contrib/cors"
 	"github.com/joho/godotenv"
 	"os"
 )
@@ -18,6 +19,7 @@ func main() {
 	if err != nil {
 		fmt.Println("error in loading .env file, locally")
 	}
+
 
 	// Redis & Team setup
 	redisClient := infrastructure.RedisConnect()
@@ -70,5 +72,6 @@ func main() {
 	routers.RegisterNewsRoutes(router, newsHandler)
 	routers.RegisterRoute(router, intentController, answerController)
 
+	router.Use(cors.Default())
 	router.Run()
 }
