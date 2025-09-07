@@ -208,7 +208,8 @@ func (ac *APIServiceClient) Statistics(league, season, team int) (*domain.TeamCo
 	if err != nil {
 		fmt.Println("Error reading response:", err)
 		return nil, domain.ErrInternalServer
-	}
+	} 
+	fmt.Println("body : ", string(body))
 
 	var apiResponse domain.StatAPIResponse
 	if err := json.Unmarshal(body, &apiResponse); err != nil {

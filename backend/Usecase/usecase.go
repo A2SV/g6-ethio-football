@@ -61,19 +61,25 @@ func (tu *TeamUsecase) Statistics(ctx context.Context, league, season int, team 
 }
 
 
-
 func( tu *TeamUsecase) StatisticsByID(ctx context.Context, league, season, team int) (*domain.TeamComparison, error){
 
 	if stats, err := tu.teamRepo.GetTeamStats(ctx, team); err == nil && stats != nil {
+		fmt.Println("stats: ", stats)
 		return stats, nil
 	}
 
+
+	fmt.Println("api called")
 	stats, err := tu.api.Statistics(league, season, team)
 	if err != nil {
+		fmt.Println("err : ", err)
 		return nil, err
 	}
 
-	_ = tu.teamRepo.SaveTeamStats(ctx, team, stats)
+	err = tu.teamRepo.SaveTeamStats(ctx, team, stats)
+	if err != nil {
+		fmt.Println("err :", err)
+	}
 
 	return stats, nil
 
@@ -141,8 +147,6 @@ func (tu *TeamUsecase) FetchAndCacheTeams(ctx context.Context, leagueID, season 
 			Bio:      fmt.Sprintf("Founded: %d, Country: %s", getFoundedYear(teamResp.Team.Founded), teamResp.Team.Country),
 		}
 		teams = append(teams, team)
-		fmt.Print("name:", team.Name)
-		fmt.Print("ID:", team.ID)
 		tu.teamRepo.CacheTeamID(ctx, team.Name, team.ID)
 	}
 
