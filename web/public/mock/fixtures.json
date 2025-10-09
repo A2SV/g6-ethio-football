@@ -1,0 +1,64 @@
+{
+  "fixtures": [
+    {
+      "id": "f-2025-09-01-ars-che",
+      "home_team": "Arsenal",
+      "away_team": "Chelsea",
+      "league": "EPL",
+      "kickoff": "2025-09-01T16:30:00Z",
+      "status": "SCHEDULED"
+    },
+    {
+      "id": "f-2025-09-02-mci-liv",
+      "home_team": "Man City",
+      "away_team": "Liverpool",
+      "league": "EPL",
+      "kickoff": "2025-09-02T18:00:00Z",
+      "status": "SCHEDULED"
+    },
+    {
+      "id": "f-2025-09-02-mci-liv",
+      "home_team": "Man City",
+      "away_team": "Liverpool",
+      "league": "EPL",
+      "kickoff": "2025-09-02T18:00:00Z",
+      "status": "SCHEDULED"
+    },
+    {
+      "id": "f-2025-09-02-mci-liv",
+      "home_team": "Man City",
+      "away_team": "Liverpool",
+      "league": "EPL",
+      "kickoff": "2025-09-02T18:00:00Z",
+      "status": "SCHEDULED"
+    },
+    {
+      "id": "f-2025-09-02-mci-liv",
+      "home_team": "Man City",
+      "away_team": "Liverpool",
+      "league": "EPL",
+      "kickoff": "2025-09-02T18:00:00Z",
+      "status": "SCHEDULED"
+    },
+    {
+      "id": "f-2025-09-02-mci-liv",
+      "home_team": "Man City",
+      "away_team": "Liverpool",
+      "league": "EPL",
+      "kickoff": "2025-09-02T18:00:00Z",
+      "status": "SCHEDULED"
+    },
+    {
+      "id": "f-2025-09-02-mci-liv",
+      "home_team": "Man City",
+      "away_team": "Liverpool",
+      "league": "EPL",
+      "kickoff": "2025-09-02T18:00:00Z",
+      "status": "SCHEDULED"
+    }
+  ],
+  "freshness": {
+    "source": "mock",
+    "retrieved": "2025-08-29T12:34:56Z"
+  }
+}
