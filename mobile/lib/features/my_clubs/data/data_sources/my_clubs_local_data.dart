@@ -21,7 +21,7 @@ class MyClubsLocalDataSourceImpl implements MyClubsLocalDataSource {
     try {
       final db = await dbHelper.database;
       final result = await db.query('clubs');
-      final clubs = result.map((e) => ClubModel.fromMap(e)).toList();
+      final clubs = result.map((e) => ClubModel.fromMap(e) as Club).toList();
       return Right(clubs);
     } catch (e) {
       return Left(CacheFailure("Failed to load clubs: $e"));
@@ -37,7 +37,7 @@ class MyClubsLocalDataSourceImpl implements MyClubsLocalDataSource {
         where: 'isFollowed = ?',
         whereArgs: [1],
       );
-      final clubs = result.map((e) => ClubModel.fromMap(e)).toList();
+      final clubs = result.map((e) => ClubModel.fromMap(e) as Club).toList();
       return Right(clubs);
     } catch (e) {
       return Left(CacheFailure("Failed to load followed clubs: $e"));
@@ -85,7 +85,7 @@ class MyClubsLocalDataSourceImpl implements MyClubsLocalDataSource {
         where: 'LOWER(name) LIKE ?',
         whereArgs: ['%${query.toLowerCase()}%'],
       );
-      final clubs = result.map((e) => ClubModel.fromMap(e)).toList();
+      final clubs = result.map((e) => ClubModel.fromMap(e) as Club).toList();
       return Right(clubs);
     } catch (e) {
       return Left(CacheFailure("Search failed: $e"));
@@ -101,7 +101,7 @@ class MyClubsLocalDataSourceImpl implements MyClubsLocalDataSource {
         where: 'league = ?',
         whereArgs: [league.name],
       );
-      final clubs = result.map((e) => ClubModel.fromMap(e)).toList();
+      final clubs = result.map((e) => ClubModel.fromMap(e) as Club).toList();
       return Right(clubs);
     } catch (e) {
       return Left(DatabaseFailure('Could not filter clubs'));

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClubCard extends StatelessWidget {
-  final Club club;
+  final dynamic club;
 
   const ClubCard({Key? key, required this.club}) : super(key: key);
 

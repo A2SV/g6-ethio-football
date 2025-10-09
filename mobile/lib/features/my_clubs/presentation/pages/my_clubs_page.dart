@@ -32,8 +32,9 @@ class _MyClubsPageState extends State<MyClubsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: isDark ? kDarkBackgroundColor : kBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -57,7 +58,7 @@ class _MyClubsPageState extends State<MyClubsPage> {
                 child: Container(
                   padding: kTop,
                   decoration: BoxDecoration(
-                    color: kBackgroundColor,
+                    color: isDark ? kDarkBackgroundColor : kBackgroundColor,
                     boxShadow: [
                       BoxShadow(
                         color: kAccentColor.withOpacity(0.12),
