@@ -1,18 +1,26 @@
-class Failure {
+/// Base class for all failures in the application.
+abstract class Failure {
   final String message;
-  Failure({required this.message});
+
+  const Failure(this.message);
 }
 
+/// Represents a server failure.
 class ServerFailure extends Failure {
-  ServerFailure() : super(message: "Server Failure");
+  const ServerFailure(super.message);
 }
 
+/// Represents a cache failure.
 class CacheFailure extends Failure {
-  final String message;
-  CacheFailure(this.message) : super(message: message);
+  const CacheFailure(super.message);
 }
 
+/// Represents a network failure.
+class NetworkFailure extends Failure {
+  const NetworkFailure(super.message);
+}
+
+/// Represents a database failure.
 class DatabaseFailure extends Failure {
-  final String message;
-  DatabaseFailure(this.message) : super(message: message);
+  const DatabaseFailure(super.message);
 }

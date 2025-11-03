@@ -49,19 +49,22 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     LoadThemeEvent event,
     Emitter<SettingsState> emit,
   ) async {
-    try {
-      final theme = await _getThemeUseCase().first;
-      emit(ThemeLoaded(theme));
-    } catch (e) {
-      emit(SettingsError('Failed to load theme'));
-    }
+    final result = await _getThemeUseCase();
+    result.fold(
+      (failure) => emit(SettingsError('Failed to load theme')),
+      (theme) => emit(ThemeLoaded(theme)),
+    );
   }
 
   Future<void> _onThemeChanged(
     ThemeChangedEvent event,
     Emitter<SettingsState> emit,
   ) async {
-    await _saveThemeUseCase(event.theme);
+    final result = await _saveThemeUseCase(event.theme);
+    result.fold(
+      (failure) => emit(SettingsError('Failed to save theme')),
+      (_) => emit(ThemeLoaded(event.theme)),
+    );
   }
 
   // Notification handlers
@@ -69,19 +72,22 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     LoadNotificationEvent event,
     Emitter<SettingsState> emit,
   ) async {
-    try {
-      final isEnabled = await _getNotificationsEnabledUseCase().first;
-      emit(NotificationStateUpdated(isEnabled));
-    } catch (e) {
-      emit(SettingsError('Failed to load notification settings'));
-    }
+    final result = await _getNotificationsEnabledUseCase();
+    result.fold(
+      (failure) => emit(SettingsError('Failed to load notification settings')),
+      (isEnabled) => emit(NotificationStateUpdated(isEnabled)),
+    );
   }
 
   Future<void> _onNotificationToggled(
     NotificationToggledEvent event,
     Emitter<SettingsState> emit,
   ) async {
-    await _setNotificationsEnabledUseCase(event.isEnabled);
+    final result = await _setNotificationsEnabledUseCase(event.isEnabled);
+    result.fold(
+      (failure) => emit(SettingsError('Failed to save notification settings')),
+      (_) => emit(NotificationStateUpdated(event.isEnabled)),
+    );
   }
 
   // Cache handler
@@ -90,11 +96,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) async {
     emit(CacheClearing());
-    try {
-      await _clearCacheUseCase();
-      emit(CacheClearedSuccess());
-    } catch (e) {
-      emit(SettingsError('Failed to clear cache.'));
-    }
+    final result = await _clearCacheUseCase();
+    result.fold(
+      (failure) => emit(SettingsError('Failed to clear cache.')),
+      (_) => emit(CacheClearedSuccess()),
+    );
   }
 }

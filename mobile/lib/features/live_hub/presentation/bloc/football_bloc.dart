@@ -11,7 +11,7 @@ class FootballBloc extends Bloc<FootballEvent, FootballState> {
   final GetLiveScores getLiveScores;
   final GetPreviousFixtures getPreviousFixtures;
   final GetLiveMatches getLiveMatches;
-  final DatabaseHelper _dbHelper = DatabaseHelper();
+  final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
   FootballBloc({
     required this.getStandings,

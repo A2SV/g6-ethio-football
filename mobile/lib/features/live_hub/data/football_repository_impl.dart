@@ -7,7 +7,7 @@ import 'models.dart';
 
 class FootballRepositoryImpl implements FootballRepository {
   final FootballApiClient api;
-  final DatabaseHelper _db = DatabaseHelper();
+  final DatabaseHelper _db = DatabaseHelper.instance;
 
   FootballRepositoryImpl(this.api);
 

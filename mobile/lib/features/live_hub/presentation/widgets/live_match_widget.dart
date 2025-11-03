@@ -1,10 +1,11 @@
-import 'package:ethio_football/features/live_hub/domain/entities.dart';
+import 'package:ethio_football/features/live_hub/domain/entities.dart'
+    as entities;
 import 'package:ethio_football/features/live_hub/presentation/widgets/team_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class LiveMatchCard extends StatelessWidget {
-  final LiveMatch match;
+  final entities.LiveMatch match;
 
   const LiveMatchCard({super.key, required this.match});
 
