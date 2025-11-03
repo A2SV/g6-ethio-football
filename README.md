@@ -8,17 +8,6 @@ It empowers millions of fans to easily follow both leagues, access real-time mat
 
 Our core innovation is a **GenAI Chat Interface** that delivers immediate, accurate, and up-to-date answers on league standings, match results, news, and historical data, fostering accessibility, engagement, and a data-driven sports culture for Ethiopian fans.
 
-## 📝 Table of Contents
-
-- [The Challenge](#the-challenge)
-- [The Solution](#the-solution)
-- [Key Features](#key-features)
-- [Mobile App Screenshots](#mobile-app-screenshots)
-- [Technology Stack for Mobile App](#technology-stack-for-mobile-app)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Contributing](#contributing)
-
 ## 🎯 The Challenge
 
 Football is at the heart of Ethiopian culture — yet the digital football experience for fans remains fragmented and unreliable.
@@ -47,7 +36,7 @@ Key innovations include:
 
 **Unified Football Access:** Provides real-time data, match results, and news for both local and global leagues in one integrated application.
 
-**Ubiquitous Access:** Available on both mobile and web, ensuring a broad reach for our target audience (Ethiopian football enthusiasts aged 15-45).
+**Ubiquitous Access:** Available on both mobile and web, ensuring a broad reach for our target audience.
 
 **Offline Support:** Ensures critical information like standings and stats remain accessible even in low-connectivity environments.
 
@@ -91,15 +80,12 @@ Key innovations include:
 
 The repository is organized into distinct directories for each major component:
 
-## 🚀 Getting Started
+## 🚀 Getting Started to set up mobile app
 
 Follow these steps to set up the project locally.
 
 ### Prerequisites
-
-*   [Go](https://go.dev/doc/install) (for the backend)
 *   [Flutter SDK](https://flutter.dev/docs/get-started/install) (for the mobile app)
-*   [Node.js and npm/yarn](https://nodejs.org/en/download/) (for the web app)
 
 ### Installation
 
@@ -109,28 +95,12 @@ Follow these steps to set up the project locally.
     cd g6-ethio-football
     ```
 
-2.  **Set up the Backend:**
-    ```bash
-    cd backend
-    # Follow backend-specific instructions here (e.g., go mod download, database setup)
-    # E.g., go run main.go
-    ```
-    ***Note:*** *Add specific backend setup instructions (e.g., environment variables, database configuration) here.*
-
-3.  **Set up the Mobile App:**
+2.  **Set up the Mobile App:**
     ```bash
     cd mobile
     flutter pub get
     flutter run
     ```
-
-4.  **Set up the Web App:**
-    ```bash
-    cd web
-    npm install # or yarn install
-    npm start   # or yarn start
-    ```
-    ***Note:*** *Add specific web setup instructions here.*
 
 ## 🤝 Contributing
 
