@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ethio_football/core/utils/database_helper.dart';
 import 'package:ethio_football/features/home/presentation/bloc/home_bloc.dart';
-import 'package:ethio_football/features/home/presentation/bloc/home_event.dart';
+import 'package:ethio_football/features/home/presentation/bloc/home_event.dart'
+    as home_event;
+import 'package:ethio_football/features/my_clubs/presentation/pages/my_clubs_page.dart';
+import 'package:ethio_football/features/my_clubs/presentation/bloc/my_clubs_bloc.dart';
+import 'package:ethio_football/injection_container.dart' as di;
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -24,7 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           // Theme Toggle
           ListTile(
-            leading: const Icon(Icons.wb_sunny_outlined),
+            leading: const FaIcon(FontAwesomeIcons.sun),
             title: const Text('Dark Theme'),
             trailing: Switch(
               value: _isDarkTheme,
@@ -42,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
           // Notification Toggle
           ListTile(
-            leading: const Icon(Icons.notifications_outlined),
+            leading: const FaIcon(FontAwesomeIcons.bell),
             title: const Text('Notifications'),
             trailing: Switch(
               value: _notificationsEnabled,
@@ -61,13 +66,23 @@ class _SettingsPageState extends State<SettingsPage> {
           // Other settings...
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.group_outlined),
+            leading: const FaIcon(FontAwesomeIcons.users),
             title: const Text('My Clubs'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => Navigator.pushNamed(context, '/myClubs'),
+            trailing: const FaIcon(FontAwesomeIcons.chevronRight),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                    create: (_) => di.sl<MyClubsBloc>(),
+                    child: const MyClubsPage(),
+                  ),
+                ),
+              );
+            },
           ),
           ListTile(
-            leading: const Icon(Icons.language_outlined),
+            leading: const FaIcon(FontAwesomeIcons.language),
             title: const Text('Language'),
             trailing: const Text('ENG'),
             onTap: () {
@@ -116,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                   // Clear chat messages from HomeBloc state
                   if (context.mounted) {
-                    context.read<HomeBloc>().add(LoadInitialMessages());
+                    context.read<HomeBloc>().clearChatMessages();
                   }
 
                   if (context.mounted) {
@@ -142,14 +157,14 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 24),
           const Divider(),
           const ListTile(
-            leading: Icon(Icons.info_outline),
+            leading: FaIcon(FontAwesomeIcons.infoCircle),
             title: Text('App Version'),
             trailing: Text('1.0.0'),
           ),
           const ListTile(
-            leading: Icon(Icons.help_outline),
+            leading: FaIcon(FontAwesomeIcons.questionCircle),
             title: Text('Help & Support'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: FaIcon(FontAwesomeIcons.chevronRight),
           ),
         ],
       ),

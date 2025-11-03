@@ -1,22 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/usecases/get_news_updates.dart';
+import '../../domain/repositories/news_repository.dart';
 import 'news_event.dart';
 import 'news_state.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
-  final GetNewsUpdates getNewsUpdates;
+  final NewsRepository repository;
 
-  NewsBloc({required this.getNewsUpdates}) : super(NewsInitial()) {
-    on<FetchNewsUpdates>(_onFetchNewsUpdates);
+  NewsBloc({required this.repository}) : super(const NewsInitial()) {
+    on<LoadNewsEvent>(_onLoadNews);
   }
 
-  void _onFetchNewsUpdates(FetchNewsUpdates event, Emitter<NewsState> emit) async {
-    emit(NewsLoading());
-    try {
-      final news = await getNewsUpdates(category: event.category);
-      emit(NewsLoaded(newsUpdates: news, currentCategory: event.category));
-    } catch (e) {
-      emit(NewsError(message: e.toString()));
-    }
+  Future<void> _onLoadNews(LoadNewsEvent event, Emitter<NewsState> emit) async {
+    emit(const NewsLoading());
+
+    final result = await repository.getNews();
+
+    result.fold(
+      (failure) => emit(NewsError(failure.message)),
+      (news) => emit(NewsLoaded(news)),
+    );
   }
 }

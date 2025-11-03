@@ -47,7 +47,7 @@ class ComparisonRepositoryImpl implements ComparisonRepository {
       print(
         '🔍 [COMPARISON_REPO] This might be due to invalid club IDs or API issues',
       );
-      return Left(ServerFailure());
+      return Left(ServerFailure('Failed to fetch comparison data'));
     }
   }
 
@@ -139,7 +139,7 @@ class ComparisonRepositoryImpl implements ComparisonRepository {
 
       return Right(clubs);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure('Failed to fetch clubs'));
     }
   }
 }

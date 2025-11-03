@@ -1,9 +1,12 @@
-import '../../domain/usecases/get_news_updates.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class NewsEvent {}
+abstract class NewsEvent extends Equatable {
+  const NewsEvent();
 
-class FetchNewsUpdates extends NewsEvent {
-  final NewsCategory category;
+  @override
+  List<Object?> get props => [];
+}
 
-  FetchNewsUpdates({this.category = NewsCategory.all});
+class LoadNewsEvent extends NewsEvent {
+  const LoadNewsEvent();
 }

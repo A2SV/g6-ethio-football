@@ -1,56 +1,22 @@
-import 'package:equatable/equatable.dart';
-import 'package:ethio_football/features/home/domain/entities/chat_message.dart';
-import 'package:ethio_football/features/home/presentation/pages/home_page.dart'
-    as home_page;
+/// States for the HomeBloc.
+abstract class HomeState {}
 
-abstract class HomeState extends Equatable {
-  final List<ChatMessage> messages;
-  final bool isLoading;
-  final String? error;
+/// Initial state.
+class HomeInitial extends HomeState {}
 
-  const HomeState({
-    this.messages = const [],
-    this.isLoading = false,
-    this.error,
-  });
+/// Loading state.
+class HomeLoading extends HomeState {}
 
-  @override
-  List<Object?> get props => [messages, isLoading, error];
-}
-
-class HomeInitial extends HomeState {
-  const HomeInitial({super.messages, super.isLoading});
-}
-
-class HomeLoading extends HomeState {
-  const HomeLoading({required super.messages, super.isLoading = true});
-}
-
+/// Loaded state with messages.
 class HomeLoaded extends HomeState {
-  const HomeLoaded({required super.messages});
+  final List<String> messages;
 
-  // Helper to add a new message
-  HomeLoaded addMessage(ChatMessage newMessage) {
-    return HomeLoaded(messages: List.from(messages)..add(newMessage));
-  }
-
-  HomeLoaded updateLastMessage(ChatMessage updatedMessage) {
-    final List<ChatMessage> updatedList = List.from(messages);
-    if (updatedList.isNotEmpty) {
-      updatedList[updatedList.length - 1] = updatedMessage;
-    }
-    return HomeLoaded(messages: updatedList);
-  }
-
-  HomeLoaded removeLastMessage() {
-    final List<ChatMessage> updatedList = List.from(messages);
-    if (updatedList.isNotEmpty) {
-      updatedList.removeLast();
-    }
-    return HomeLoaded(messages: updatedList);
-  }
+  HomeLoaded(this.messages);
 }
 
+/// Error state.
 class HomeError extends HomeState {
-  const HomeError({required super.messages, required super.error});
+  final String message;
+
+  HomeError(this.message);
 }

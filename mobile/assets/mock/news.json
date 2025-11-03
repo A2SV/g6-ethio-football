@@ -1,0 +1,68 @@
+[
+  {
+    "id": "1",
+    "title": "Manchester City Dominates Premier League with Record-Breaking Season",
+    "summary": "Pep Guardiola's team sets new standards with an incredible unbeaten run and breathtaking football.",
+    "image": "🏆",
+    "timeAgo": "2 hours ago",
+    "category": "Premier League",
+    "readTime": "3 min read",
+    "icon": "trophy",
+    "color": "#FFD700"
+  },
+  {
+    "id": "2",
+    "title": "Real Madrid Secures Champions League Victory in Dramatic Final",
+    "summary": "A last-minute goal gives Los Blancos their 15th European crown in a match for the ages.",
+    "image": "👑",
+    "timeAgo": "5 hours ago",
+    "category": "Champions League",
+    "readTime": "4 min read",
+    "icon": "crown",
+    "color": "#FFD700"
+  },
+  {
+    "id": "3",
+    "title": "Transfer Window Heats Up: Major Moves Shake Football World",
+    "summary": "Star players change clubs as summer transfers create unprecedented excitement in the market.",
+    "image": "⚽",
+    "timeAgo": "8 hours ago",
+    "category": "Transfers",
+    "readTime": "5 min read",
+    "icon": "exchange-alt",
+    "color": "#2196F3"
+  },
+  {
+    "id": "4",
+    "title": "African Nations Show Promise in International Competitions",
+    "summary": "Rising stars from the continent impress with skillful displays and tactical maturity.",
+    "image": "🌍",
+    "timeAgo": "12 hours ago",
+    "category": "International",
+    "readTime": "6 min read",
+    "icon": "globe",
+    "color": "#4CAF50"
+  },
+  {
+    "id": "5",
+    "title": "Revolutionary Training Methods Transform Player Performance",
+    "summary": "New technology and innovative coaching techniques are redefining athletic excellence.",
+    "image": "💪",
+    "timeAgo": "1 day ago",
+    "category": "Training",
+    "readTime": "7 min read",
+    "icon": "dumbbell",
+    "color": "#FF5722"
+  },
+  {
+    "id": "6",
+    "title": "Historic Comeback: Underdog Team Defies All Odds",
+    "summary": "An incredible turnaround story that will inspire football fans for generations.",
+    "image": "🔥",
+    "timeAgo": "2 days ago",
+    "category": "Inspiration",
+    "readTime": "4 min read",
+    "icon": "fire",
+    "color": "#FF5722"
+  }
+]

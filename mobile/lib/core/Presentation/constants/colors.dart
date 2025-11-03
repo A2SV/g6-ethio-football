@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // ------------------------------------
 // Main background color of the screen
 const Color kBackgroundColor = Color(0xFFFAFAFA);
+const Color kDarkBackgroundColor = Color.fromARGB(0, 32, 32, 32);
 
 // Background color of the cards
 const Color kCardColor = Colors.white;

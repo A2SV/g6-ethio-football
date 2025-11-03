@@ -1,227 +1,429 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../domain/entities/news_update_entity.dart';
-import '../../domain/usecases/get_news_updates.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../bloc/news_bloc.dart';
 import '../bloc/news_event.dart';
 import '../bloc/news_state.dart';
+import '../../../../injection_container.dart' as di;
 
+/// News page for displaying football news.
 class NewsPage extends StatefulWidget {
-  const NewsPage({Key? key}) : super(key: key);
+  const NewsPage({super.key});
 
   @override
   State<NewsPage> createState() => _NewsPageState();
 }
 
-class _NewsPageState extends State<NewsPage> {
-  NewsCategory _currentCategory = NewsCategory.all;
+class _NewsPageState extends State<NewsPage> with TickerProviderStateMixin {
+  late final AnimationController _heroController;
+  late final Animation<double> _heroAnimation;
+  late final AnimationController _cardsController;
+  late final Animation<double> _cardsAnimation;
 
   @override
   void initState() {
     super.initState();
-    // Dispatch an event to fetch news when the page initializes
-    context.read<NewsBloc>().add(FetchNewsUpdates(category: _currentCategory));
-  }
+    context.read<NewsBloc>().add(const LoadNewsEvent());
 
-  String _getCategoryTitle(NewsCategory category) {
-    switch (category) {
-      case NewsCategory.all:
-        return 'All News Updates';
-      case NewsCategory.pastMatches:
-        return 'Past Matches';
-      case NewsCategory.standings:
-        return 'League Standings';
-      case NewsCategory.futureMatches:
-        return 'Upcoming Matches';
-      case NewsCategory.liveScores:
-        return 'Live Scores';
-    }
-  }
-
-  // Widget to display a single news item (simple text)
-  Widget _buildNewsUpdateItem(NewsUpdateEntity newsUpdate) {
-    String timeInfo = '';
-    if (newsUpdate.publishedAt != null) {
-      final Duration difference = DateTime.now().difference(
-        newsUpdate.publishedAt!,
-      );
-      if (difference.inDays > 0) {
-        timeInfo = ' - ${difference.inDays} Days Ago';
-      } else if (difference.inHours > 0) {
-        timeInfo = ' - ${difference.inHours} Hours Ago';
-      } else {
-        timeInfo = ' - ${difference.inMinutes} Minutes Ago';
-      }
-    }
-
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(newsUpdate.content, style: const TextStyle(fontSize: 15)),
-            if (timeInfo.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text(
-                '${newsUpdate.type}$timeInfo',
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-              ),
-            ],
-            if (timeInfo.isEmpty) ...[
-              const SizedBox(height: 8),
-              Text(
-                newsUpdate.type,
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-              ),
-            ],
-          ],
-        ),
-      ),
+    _heroController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
     );
+
+    _heroAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _heroController, curve: Curves.easeOutCubic),
+    );
+
+    _cardsController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+
+    _cardsAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _cardsController, curve: Curves.elasticOut),
+    );
+
+    // Start animations
+    _heroController.forward();
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _cardsController.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _heroController.dispose();
+    _cardsController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: const TextField(
-            decoration: InputDecoration(
-              hintText: 'Search Updates',
-              border: InputBorder.none,
-              prefixIcon: Icon(Icons.search, color: Colors.grey),
-              contentPadding: EdgeInsets.symmetric(vertical: 10),
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFFE8F5E8), // Very light green
+              Color(0xFFF1F8E9), // Light green-white
+              Color(0xFFDCEDC8), // Soft green
+              Color(0xFFC8E6C9), // Light green
+            ],
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_list, color: Colors.black),
-            onPressed: () {
-              _showFilterOptions(context);
+        child: SafeArea(
+          child: BlocBuilder<NewsBloc, NewsState>(
+            builder: (context, state) {
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 20),
+
+                      // Hero Section
+                      FadeTransition(
+                        opacity: _heroAnimation,
+                        child: SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(0, 0.3),
+                            end: Offset.zero,
+                          ).animate(_heroAnimation),
+                          child: _buildHeroSection(),
+                        ),
+                      ),
+
+                      const SizedBox(height: 32),
+
+                      // News Feed
+                      FadeTransition(
+                        opacity: _cardsAnimation,
+                        child: SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(0, 0.1),
+                            end: Offset.zero,
+                          ).animate(_cardsAnimation),
+                          child: _buildNewsContent(state),
+                        ),
+                      ),
+
+                      const SizedBox(height: 100), // Extra space for bottom nav
+                    ],
+                  ),
+                ),
+              );
             },
           ),
-        ],
-        // Removed TabBar as there's only one main 'Latest' view now
-      ),
-      body: BlocBuilder<NewsBloc, NewsState>(
-        builder: (context, state) {
-          if (state is NewsInitial || state is NewsLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is NewsLoaded) {
-            if (state.newsUpdates.isEmpty) {
-              return const Center(
-                child: Text('No updates available for this category.'),
-              );
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
-                  ),
-                  child: Text(
-                    _getCategoryTitle(state.currentCategory),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: state.newsUpdates.length,
-                    itemBuilder: (context, index) {
-                      final newsUpdate = state.newsUpdates[index];
-                      return _buildNewsUpdateItem(newsUpdate);
-                    },
-                  ),
-                ),
-              ],
-            );
-          } else if (state is NewsError) {
-            return Center(child: Text('Error: ${state.message}'));
-          }
-          return const Center(child: Text('Something went wrong!'));
-        },
+        ),
       ),
     );
   }
 
-  void _showFilterOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Text(
-                'Select Update Category',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  Widget _buildHeroSection() {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF4CAF50), // Medium green
+            Color(0xFF66BB6A), // Light green
+            Color(0xFF81C784), // Very light green
+          ],
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF4CAF50).withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const FaIcon(
+                  FontAwesomeIcons.newspaper,
+                  color: Colors.white,
+                  size: 32,
+                ),
               ),
-              const SizedBox(height: 16),
-              _buildFilterListTile(context, NewsCategory.all, 'All Updates'),
-              _buildFilterListTile(
-                context,
-                NewsCategory.pastMatches,
-                'Past Matches',
-              ),
-              _buildFilterListTile(
-                context,
-                NewsCategory.standings,
-                'League Standings',
-              ),
-              _buildFilterListTile(
-                context,
-                NewsCategory.futureMatches,
-                'Upcoming Matches',
-              ),
-              _buildFilterListTile(
-                context,
-                NewsCategory.liveScores,
-                'Live Scores',
+              const SizedBox(width: 16),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Football News',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                      'Latest Updates',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        );
-      },
+          const SizedBox(height: 20),
+          const Text(
+            'Stay informed with the latest football news, transfer updates, match analysis, and breaking stories from around the world.',
+            style: TextStyle(color: Colors.white, fontSize: 16, height: 1.5),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildFilterListTile(
-    BuildContext context,
-    NewsCategory category,
-    String title,
-  ) {
-    return ListTile(
-      leading: _currentCategory == category
-          ? const Icon(Icons.check, color: Color(0xFF1E392A))
-          : null,
-      title: Text(title),
-      onTap: () {
-        setState(() {
-          _currentCategory = category;
-          context.read<NewsBloc>().add(
-            FetchNewsUpdates(category: _currentCategory),
-          );
-        });
-        Navigator.pop(context);
-      },
+  Widget _buildNewsContent(NewsState state) {
+    if (state is NewsLoading) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(40.0),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4CAF50)),
+          ),
+        ),
+      );
+    } else if (state is NewsError) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Column(
+            children: [
+              const FaIcon(
+                FontAwesomeIcons.exclamationTriangle,
+                color: Color(0xFF4CAF50),
+                size: 48,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                state.message,
+                style: const TextStyle(color: Color(0xFF2E7D32), fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<NewsBloc>().add(const LoadNewsEvent());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF4CAF50),
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (state is NewsLoaded) {
+      return _buildNewsFeed(state.news);
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _buildNewsFeed(List<dynamic> news) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Latest News',
+          style: TextStyle(
+            color: Color(0xFF2E7D32),
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 16),
+        ...news.map((article) => _buildNewsCard(article)).toList(),
+      ],
+    );
+  }
+
+  Widget _buildNewsCard(dynamic article) {
+    // Convert hex color string to Color
+    Color getColorFromHex(String hexColor) {
+      hexColor = hexColor.replaceAll('#', '');
+      return Color(int.parse('FF$hexColor', radix: 16));
+    }
+
+    // Get FontAwesome icon from string
+    IconData getIconFromString(String iconName) {
+      switch (iconName) {
+        case 'trophy':
+          return FontAwesomeIcons.trophy;
+        case 'crown':
+          return FontAwesomeIcons.crown;
+        case 'exchange-alt':
+          return FontAwesomeIcons.exchangeAlt;
+        case 'globe':
+          return FontAwesomeIcons.globe;
+        case 'dumbbell':
+          return FontAwesomeIcons.dumbbell;
+        case 'fire':
+          return FontAwesomeIcons.fire;
+        default:
+          return FontAwesomeIcons.newspaper;
+      }
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFE8F5E8), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF4CAF50).withOpacity(0.1),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            // Handle news tap
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Opening: ${article.title}'),
+                backgroundColor: const Color(0xFF4CAF50),
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Category and Time
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: getColorFromHex(article.color).withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          FaIcon(
+                            getIconFromString(article.icon),
+                            color: getColorFromHex(article.color),
+                            size: 14,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            article.category,
+                            style: TextStyle(
+                              color: getColorFromHex(article.color),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      article.timeAgo,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Title
+                Text(
+                  article.title,
+                  style: const TextStyle(
+                    color: Color(0xFF2E7D32),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    height: 1.3,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                // Summary
+                Text(
+                  article.summary,
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: 14,
+                    height: 1.5,
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Footer
+                Row(
+                  children: [
+                    Text(article.image, style: const TextStyle(fontSize: 20)),
+                    const SizedBox(width: 12),
+                    Text(
+                      article.readTime,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8F5E8),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const FaIcon(
+                        FontAwesomeIcons.chevronRight,
+                        color: Color(0xFF4CAF50),
+                        size: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:ethio_football/features/live_hub/presentation/widgets/previous_f
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../../domain/entities.dart';
+import '../../domain/entities.dart' as entities;
 import '../bloc/football_bloc.dart';
 import '../bloc/football_state.dart';
 import 'common_widgets.dart';
@@ -278,8 +278,8 @@ class LiveMatchesSection extends StatelessWidget {
 class LeagueCard extends StatelessWidget {
   final String leagueName;
   final Widget leagueLogo;
-  final List<Fixture> fixtures;
-  final List<LiveScore> liveScores;
+  final List<entities.Fixture> fixtures;
+  final List<entities.LiveScore> liveScores;
 
   const LeagueCard({
     super.key,
